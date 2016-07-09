@@ -44,20 +44,52 @@ function getSubPhoneDisplay (anchorx, anchory, image_sizex, image_sizey, phone_s
 
 function getAnchorDisplacement (anchorx, anchory, lst) {
 	/**
-	Takes in the current coordinates of anchor and a list of phones, and outputs the position of the phone relative to the anchor
+	Takes in the current global coordinates of anchor and a list of phones, and outputs the position of the phone relative to the anchor
 	*/
 	var newlst = [];
 	for (var j = 0; j < lst.length; j++){
-  		curphone = myArray[j];
-  		displacement = [curphone["corner"]["x"], curphone["corner"]["y"]]; // rename once decided
-  		displacement[0] += anchorx;
-  		displacement[1] += anchory;
-  		newlst.push(displacement);
+  		curphone = lst[j];
+  		newlst.push(globalToPhone(anchorx, anchory, curphone));
 	}
 	return newlst;
 }
 
-function scale(factor, lst) {
+function phoneToGlobal(pointx, pointy, phone) {
+	/**
+	Takes in a point in a phone's coordinate frame, and transforms it into global frame.
+	*/
+	var lst = [pointx, pointy];
+	lst[0] += phone["corner"]["x"];
+	lst[1] += phone["corner"]["y"];
+	return lst;
+
+}
+
+function globalToPhone(pointx, pointy, phone) {
+	/**
+	Takes in a point in global frame, and transforms it into a phone's frame.
+	*/
+	var lst = [pointx, pointy];
+	lst[0] -= phone["corner"]["x"];
+	lst[1] -= phone["corner"]["y"];
+	return lst;
+}
+
+function translateGlobal(translationx, translationy, phonelst)
+	/** 
+	Translates all the phones in global frame. Note: anchor point also needs to be translated separately.
+	*/
+	var newlst = [];
+	for (var j = 0; j < lst.length; j++){
+  		curphone = lst[j];
+  		newpt = [phone["corner"]["x"], phone["corner"]["y"]]
+  		newpt[0] -= translationx
+  		newpt[1] -= translationy
+  		newlst.push(newpt);
+	}
+	return newlst;
+
+function scale(factor, lst, phone, center_of_zoom) {
 	/** 
 	Takes in a list of phones, rescales the top corner when zoom input is detected
 	*/
