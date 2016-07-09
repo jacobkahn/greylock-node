@@ -16,10 +16,17 @@ $(document).ready(function() {
     width: screen.width,
     overlow: 'hidden',
   });
-})
+
+  $('body').on({
+    'mousewheel': function(e) {
+      if (e.target.id == 'el') return;
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  });
 
   // ----------------------------- SOCKET ----------------------------------
-  window.socket = io();
+  // window.socket = io();
   // -----------------------------------------------------------------------
 
   var ITEM_WIDTH = $('.item').css('width');
