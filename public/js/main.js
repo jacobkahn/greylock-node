@@ -7,13 +7,13 @@ $(document).ready(function() {
 
   // lock in screen size to device display size
   $('body').css({
-    height: $(document).height(),
-    width: $(document).width(),
+    height: screen.height,
+    width: screen.width,
     overlow: 'hidden',
   });
   $('#container').css({
-    height: $(document).height(),
-    width: $(document).width(),
+    height: screen.height,
+    width: screen.width,
     overlow: 'hidden',
   });
 
