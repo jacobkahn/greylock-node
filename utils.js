@@ -22,6 +22,7 @@ function getSubImage (anchorx, anchory, image_sizex, image_sizey, phone_sizex, p
 	}
 }
 
+
 function getSubPhoneDisplay (anchorx, anchory, image_sizex, image_sizey, phone_sizex, phone_sizey) {
 	var subimage = getSubImage(anchorx, anchory, image_sizex, image_sizey, phone_sizex, phone_sizey);
 	if (subimage == null) {
@@ -40,6 +41,22 @@ function getSubPhoneDisplay (anchorx, anchory, image_sizex, image_sizey, phone_s
 		return [top_left, top_right, bot_left, bot_right];
 	}
 }
+
+function getAnchorDisplacement (anchorx, anchory, lst) {
+	/**
+	Takes in the current coordinates of anchor and a list of phones, and outputs the position of the phone relative to the anchor
+	*/
+	newlst = []
+	for (var j = 0; j < lst.length; j++){
+  		curphone = myArray[j]
+  		displacement = [curphone["corner"][x], curphone["corner"]] // rename once decided
+  		displacement[0] += anchorx
+  		displacement[1] += anchory
+  		newlst.push(displacement)
+	}
+	return newlst
+}
+
 
 // random test code
 anchorx = 1000
