@@ -75,7 +75,7 @@ function translateGlobal(translationx, translationy, phonelst) {
 	*/
 	var newlst = [];
 	for (var j = 0; j < phonelst.length; j++){
-  		curphone = phonelst[j];
+  		phone = phonelst[j];
   		newpt = [phone["corner"]["x"], phone["corner"]["y"]];
   		newpt[0] += translationx;
   		newpt[1] += translationy;
