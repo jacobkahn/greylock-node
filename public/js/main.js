@@ -26,7 +26,7 @@ $(document).ready(function() {
   });
 
   // ----------------------------- SOCKET ----------------------------------
-  // window.socket = io();
+  window.socket = io();
   // -----------------------------------------------------------------------
 
   var ITEM_WIDTH = $('.item').css('width');
@@ -78,6 +78,13 @@ $(document).ready(function() {
     var item = interact.getElementRect(event.target);
 
     textEl && (textEl.textContent = 'Anchored at ' + item.left + ', ' + item.top)
+
+    window.socket.emit('item_move', {
+      anchor: {
+        x: item.top,
+        y: item.left,
+      }
+    })
   }
 
   // this is used later in the resizing and gesture demos
