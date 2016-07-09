@@ -46,17 +46,23 @@ function getAnchorDisplacement (anchorx, anchory, lst) {
 	/**
 	Takes in the current coordinates of anchor and a list of phones, and outputs the position of the phone relative to the anchor
 	*/
-	newlst = []
+	var newlst = [];
 	for (var j = 0; j < lst.length; j++){
-  		curphone = myArray[j]
-  		displacement = [curphone["corner"]["x"], curphone["corner"]["y"]] // rename once decided
-  		displacement[0] += anchorx
-  		displacement[1] += anchory
-  		newlst.push(displacement)
+  		curphone = myArray[j];
+  		displacement = [curphone["corner"]["x"], curphone["corner"]["y"]]; // rename once decided
+  		displacement[0] += anchorx;
+  		displacement[1] += anchory;
+  		newlst.push(displacement);
 	}
-	return newlst
+	return newlst;
 }
 
+function scale(factor, lst) {
+	/** 
+	Takes in a list of phones, rescales the top corner when zoom input is detected
+	*/
+	return null;
+}
 
 // random test code
 anchorx = 1000
