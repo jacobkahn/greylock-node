@@ -1,6 +1,15 @@
+html {
+  top: 0;
+  left: 0;
+  position: absolute;
+}
+
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  margin: 0;
 }
 
 a {
