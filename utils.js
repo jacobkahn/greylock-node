@@ -85,14 +85,18 @@ function translateGlobal(translationx, translationy, phonelst) {
 }
 
 function translatePoint(translatex, translatey, pointx, pointy) {
+	/**
+	Translates a point.
+	*/
 	return [translatex + pointx, translatey + pointy];
 }
 
-function scale(factor, lst, phone, center_of_zoom) {
+function scale(factor, centerx, centery, pointx, pointy) {
 	/** 
-	Takes in a list of phones, rescales the top corner when zoom input is detected
+	Zoom helper function.
 	*/
-	return null;
+	return [(pointx - centerx) * factor + centerx, (pointy - centery) * factor + centery];
+
 }
 
 // random test code
