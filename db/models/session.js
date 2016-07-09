@@ -1,4 +1,4 @@
-var Waterline = require('Waterline');
+var Waterline = require('waterline');
 
 var Session = Waterline.Collection.extend({
   identity: 'session',
