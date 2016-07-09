@@ -48,7 +48,7 @@ function getAnchorDisplacement (anchorx, anchory, lst) {
 	*/
 	var newlst = [];
 	for (var j = 0; j < lst.length; j++){
-  		curphone = myArray[j];
+  		curphone = lst[j];
   		newlst.push(globalToPhone(anchorx, anchory, curphone));
 	}
 	return newlst;
@@ -74,6 +74,20 @@ function globalToPhone(pointx, pointy, phone) {
 	lst[1] -= phone["corner"]["y"];
 	return lst;
 }
+
+function translateGlobal(translationx, translationy, phonelst)
+	/** 
+	Translates all the phones in global frame. Note: anchor point also needs to be translated separately.
+	*/
+	var newlst = [];
+	for (var j = 0; j < lst.length; j++){
+  		curphone = lst[j];
+  		newpt = [phone["corner"]["x"], phone["corner"]["y"]]
+  		newpt[0] -= translationx
+  		newpt[1] -= translationy
+  		newlst.push(newpt);
+	}
+	return newlst;
 
 function scale(factor, lst, phone, center_of_zoom) {
 	/** 
