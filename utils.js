@@ -22,6 +22,7 @@ function getSubImage (anchorx, anchory, image_sizex, image_sizey, phone_sizex, p
 	}
 }
 
+
 function getSubPhoneDisplay (anchorx, anchory, image_sizex, image_sizey, phone_sizex, phone_sizey) {
 	var subimage = getSubImage(anchorx, anchory, image_sizex, image_sizey, phone_sizex, phone_sizey);
 	if (subimage == null) {
@@ -39,6 +40,60 @@ function getSubPhoneDisplay (anchorx, anchory, image_sizex, image_sizey, phone_s
 		var bot_left = [phone_left, phone_top + dy];
 		return [top_left, top_right, bot_left, bot_right];
 	}
+}
+
+function getAnchorDisplacement (anchorx, anchory, lst) {
+	/**
+	Takes in the current global coordinates of anchor and a list of phones, and outputs the position of the phone relative to the anchor
+	*/
+	var newlst = [];
+	for (var j = 0; j < lst.length; j++){
+  		curphone = lst[j];
+  		newlst.push(globalToPhone(anchorx, anchory, curphone));
+	}
+	return newlst;
+}
+
+function phoneToGlobal(pointx, pointy, phone) {
+	/**
+	Takes in a point in a phone's coordinate frame, and transforms it into global frame.
+	*/
+	var lst = [pointx, pointy];
+	lst[0] += phone["corner"]["x"];
+	lst[1] += phone["corner"]["y"];
+	return lst;
+
+}
+
+function globalToPhone(pointx, pointy, phone) {
+	/**
+	Takes in a point in global frame, and transforms it into a phone's frame.
+	*/
+	var lst = [pointx, pointy];
+	lst[0] -= phone["corner"]["x"];
+	lst[1] -= phone["corner"]["y"];
+	return lst;
+}
+
+function translateGlobal(translationx, translationy, phonelst)
+	/** 
+	Translates all the phones in global frame. Note: anchor point also needs to be translated separately.
+	*/
+	var newlst = [];
+	for (var j = 0; j < lst.length; j++){
+  		curphone = lst[j];
+  		newpt = [phone["corner"]["x"], phone["corner"]["y"]]
+  		newpt[0] -= translationx
+  		newpt[1] -= translationy
+  		newlst.push(newpt);
+	}
+	return newlst;
+
+function scale(factor, lst, phone, center_of_zoom) {
+	/** 
+	Takes in a list of phones, rescales the top corner when zoom input is detected
+	*/
+	return null;
 }
 
 // random test code

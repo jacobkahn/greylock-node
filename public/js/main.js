@@ -17,6 +17,18 @@ $(document).ready(function() {
     overlow: 'hidden',
   });
 
+  $('body').on({
+    'mousewheel': function(e) {
+      if (e.target.id == 'el') return;
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  });
+
+  // ----------------------------- SOCKET ----------------------------------
+  window.socket = io();
+  // -----------------------------------------------------------------------
+
   var ITEM_WIDTH = $('.item').css('width');
   var ITEM_HEIGHT = $('.item').css('height');
 
@@ -30,12 +42,10 @@ $(document).ready(function() {
         elementRect: {
           top: (-1 * ITEM_HEIGHT),
           left: (-1 * ITEM_WIDTH),
-          bottom: ITEM_HEIGHT,
-          right: ITEM_WIDTH
+          bottom: 0,
+          right: 0
         }
       },
-      // enable autoScroll
-      autoScroll: true,
       snap: false,
 
       // call this function on every dragmove event
@@ -68,6 +78,25 @@ $(document).ready(function() {
     var item = interact.getElementRect(event.target);
 
     textEl && (textEl.textContent = 'Anchored at ' + item.left + ', ' + item.top)
+
+    window.socket.emit('item_move', {
+      anchor: {
+        x: item.top,
+        y: item.left,
+      }
+    });
+
+    // draw fancy shit
+    // var particle, theta, force, touch, max, i, j, n;
+
+    for (var i = 0; i < window.magic.touches.length; i++) {
+
+      var touch = window.magic.touches[i];
+      var max = Math.round(Math.random() * 4);
+      for (var j = 0; j < max; j++) {
+        window.magic.spawn(event.pageX, event.pageY - 50);
+      };
+    }
   }
 
   // this is used later in the resizing and gesture demos

@@ -20,7 +20,8 @@ a {
   position: absolute;
   width: 150px;
   height: 150px;
-  background: #17822c;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 50%;
 }
 
 .info {
