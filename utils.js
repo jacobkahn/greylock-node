@@ -84,7 +84,7 @@ function translateGlobal(translationx, translationy, phonelst) {
 	return newlst;
 }
 
-function translatePoint(translatex, translatey, pointx, pointy) {
+function translate(translatex, translatey, pointx, pointy) {
 	/**
 	Translates a point.
 	*/
