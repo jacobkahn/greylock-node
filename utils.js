@@ -100,7 +100,7 @@ function scale(factor, centerx, centery, pointx, pointy) {
 
 function rotate(theta, centerx, centery, pointx, pointy) {
 	/**
-	Rotates a vector from center to point around center counterclockwise by theta (in degrees).
+	Rotates a vector from center to point around center clockwise by theta (in degrees).
 	*/
 	dx = pointx - centerx
 	dy = pointy - centery
