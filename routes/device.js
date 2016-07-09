@@ -1,7 +1,5 @@
 var express = require('express');
 var hat = require('hat');
-var Device = require('../db/models').device;
-
 var client = require('../db/db');
 
 var router = express.Router();
