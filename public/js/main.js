@@ -17,6 +17,18 @@ $(document).ready(function() {
     overlow: 'hidden',
   });
 
+  $('body').on({
+    'mousewheel': function(e) {
+        if (e.target.id == 'el') return;
+        e.preventDefault();
+        e.stopPropagation();
+    }
+})
+
+  // ----------------------------- SOCKET ----------------------------------
+  window.socket = io();
+  // -----------------------------------------------------------------------
+
   var ITEM_WIDTH = $('.item').css('width');
   var ITEM_HEIGHT = $('.item').css('height');
 
