@@ -49,7 +49,7 @@ function getAnchorDisplacement (anchorx, anchory, lst) {
 	newlst = []
 	for (var j = 0; j < lst.length; j++){
   		curphone = myArray[j]
-  		displacement = [curphone["corner"][x], curphone["corner"]] // rename once decided
+  		displacement = [curphone["corner"]["x"], curphone["corner"]["y"]] // rename once decided
   		displacement[0] += anchorx
   		displacement[1] += anchory
   		newlst.push(displacement)
