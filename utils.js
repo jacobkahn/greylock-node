@@ -75,7 +75,7 @@ function globalToPhone(pointx, pointy, phone) {
 	return lst;
 }
 
-function translateGlobal(translationx, translationy, phonelst)
+function translateGlobal(translationx, translationy, phonelst) {
 	/** 
 	Translates all the phones in global frame. Note: anchor point also needs to be translated separately.
 	*/
@@ -88,6 +88,7 @@ function translateGlobal(translationx, translationy, phonelst)
   		newlst.push(newpt);
 	}
 	return newlst;
+}
 
 function scale(factor, lst, phone, center_of_zoom) {
 	/** 
