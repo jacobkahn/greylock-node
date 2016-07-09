@@ -10,7 +10,7 @@ var device = require('./routes/device');
 
 var app = express();
 
-var db = require('./db/waterline');
+var db = require('./db/db');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -24,19 +24,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
-// set up db and orm
-db.client.initialize(db.config, function (err, ontology) {
-  if (err) {
-    console.log(err);
-  }
-  app.models = ontology.collections;
-});
-
-app.use(function(req, res, next) {
-  req.models = app.models;
-  next();
-});
 app.use('/', routes);
 app.use('/device', device);
 
@@ -71,6 +58,6 @@ app.use(function(err, req, res, next) {
   });
 });
 
-
+db.set('session_counter', 1, function () {});
 
 module.exports = app;
