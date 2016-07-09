@@ -96,7 +96,18 @@ function scale(factor, centerx, centery, pointx, pointy) {
 	Zoom helper function.
 	*/
 	return [(pointx - centerx) * factor + centerx, (pointy - centery) * factor + centery];
+}
 
+function rotate(theta, centerx, centery, pointx, pointy) {
+	/**
+	Rotates a vector from center to point around center counterclockwise by theta (in degrees).
+	*/
+	dx = pointx - centerx
+	dy = pointy - centery
+	rad = theta * Math.PI / 180.0
+	sine = Math.sin(rad)
+	cosine = Math.cos(rad)
+	return [dx * cosine - dy * sine + centerx, dx * sine + dy * cosine + centery]
 }
 
 // random test code
