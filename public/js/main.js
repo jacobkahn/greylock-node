@@ -7,13 +7,13 @@ $(document).ready(function() {
 
   // lock in screen size to device display size
   $('body').css({
-    height: screen.height,
-    width: screen.width,
+    height: $(document).height(),
+    width: $(document).width(),
     overlow: 'hidden',
   });
   $('#container').css({
-    height: screen.height,
-    width: screen.width,
+    height: $(document).height(),
+    width: $(document).width(),
     overlow: 'hidden',
   });
 
@@ -30,12 +30,10 @@ $(document).ready(function() {
         elementRect: {
           top: (-1 * ITEM_HEIGHT),
           left: (-1 * ITEM_WIDTH),
-          bottom: ITEM_HEIGHT,
-          right: ITEM_WIDTH
+          bottom: 0,
+          right: 0
         }
       },
-      // enable autoScroll
-      autoScroll: true,
       snap: false,
 
       // call this function on every dragmove event
