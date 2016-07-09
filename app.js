@@ -17,25 +17,6 @@ db.client.initialize(db.config, function (err, ontology) {
   if (err) {
     console.log(err);
   }
-  var Device = ontology.collections.device;
-  var Session = ontology.collections.session;
-
-  Session.create({
-    }).then(function (session) { // Then we create the pet
-          return Device.create({
-              deviceID: 'hello',
-              session: session,
-          });
-
-      }).then(function (device) { // Then we grab all users and their pets
-          return Session.find().populate('devices');
-
-      }).then(function(devices){ // Results of the previous then clause are passed to the next
-           console.dir(devices);
-
-      }).catch(function(err){ // If any errors occur execution jumps to the catch block.
-          console.error(err);
-      });
 });
 
 

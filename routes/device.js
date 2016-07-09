@@ -9,3 +9,5 @@ router.get('initialize', function (req, res, next) {
 		status: 'success',
 	});
 });
+
+module.exports = router;
