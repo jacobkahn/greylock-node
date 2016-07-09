@@ -6,6 +6,11 @@ $(document).ready(function() {
   $('#diagnostics').html(diagnostics);
 
   // lock in screen size to device display size
+  $('body').css({
+    height: screen.height,
+    width: screen.width,
+    overlow: 'hidden',
+  });
   $('#container').css({
     height: screen.height,
     width: screen.width,
@@ -22,7 +27,12 @@ $(document).ready(function() {
       inertia: true,
       restrict: {
         restriction: 'parent',
-        elementRect: { top: (-1 * ITEM_HEIGHT), left: (- 1* ITEM_WIDTH), bottom: ITEM_HEIGHT, right: ITEM_WIDTH }
+        elementRect: {
+          top: (-1 * ITEM_HEIGHT),
+          left: (-1 * ITEM_WIDTH),
+          bottom: ITEM_HEIGHT,
+          right: ITEM_WIDTH
+        }
       },
       // enable autoScroll
       autoScroll: true,
