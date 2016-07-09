@@ -6,3 +6,16 @@ body {
 a {
   color: #00B7FF;
 }
+
+.item {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  background: #17822c;
+}
+
+.info {
+  color: #fff;
+  text-align: center;
+  padding: 25px;
+}

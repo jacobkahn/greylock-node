@@ -3,9 +3,16 @@
   <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <% include externalScripts %>
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <h1>Diagnostics</h1> 
+    <p id="diagnostics"></p>
+
+    <div id="item" class="draggable item">
+      <p class="info"> You should be able to drag this around </p>
+    </div>
+
+    <script type="text/javascript" src="/js/main.js"></script>
   </body>
 </html>
