@@ -5,6 +5,12 @@ $(document).ready(function() {
   var diagnostics = 'Screen dimensions: ' + screen.height + ' x ' + screen.width + '<br/>Viewport dimensions: ' + $(document).height() + ' x ' + $(document).width();
   $('#diagnostics').html(diagnostics);
 
+  // lock in screen size to device display size
+  $('<body>').css({
+    height: screen.height,
+    width: screen.width,
+  });
+
   // target elements with the "draggable" class
   interact('.draggable')
     .draggable({
