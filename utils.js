@@ -74,8 +74,8 @@ function translateGlobal(translationx, translationy, phonelst) {
 	Translates the global frame itself (equivalent to scrolling). Note: anchor point also needs to be translated separately.
 	*/
 	var newlst = [];
-	for (var j = 0; j < lst.length; j++){
-  		curphone = lst[j];
+	for (var j = 0; j < phonelst.length; j++){
+  		curphone = phonelst[j];
   		newpt = [phone["corner"]["x"], phone["corner"]["y"]];
   		newpt[0] += translationx;
   		newpt[1] += translationy;
