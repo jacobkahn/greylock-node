@@ -58,10 +58,7 @@ function phoneToGlobal(pointx, pointy, phone) {
 	/**
 	Takes in a point in a phone's coordinate frame, and transforms it into global frame.
 	*/
-	var lst = [pointx, pointy];
-	lst[0] += phone["corner"]["x"];
-	lst[1] += phone["corner"]["y"];
-	return lst;
+	return [pointx + phone["corner"]["x"], pointy + phone["corner"]["y"]];
 
 }
 
@@ -69,25 +66,26 @@ function globalToPhone(pointx, pointy, phone) {
 	/**
 	Takes in a point in global frame, and transforms it into a phone's frame.
 	*/
-	var lst = [pointx, pointy];
-	lst[0] -= phone["corner"]["x"];
-	lst[1] -= phone["corner"]["y"];
-	return lst;
+	return [pointx - phone["corner"]["x"], pointy - phone["corner"]["y"]];
 }
 
 function translateGlobal(translationx, translationy, phonelst) {
 	/** 
-	Translates all the phones in global frame. Note: anchor point also needs to be translated separately.
+	Translates the global frame itself (equivalent to scrolling). Note: anchor point also needs to be translated separately.
 	*/
 	var newlst = [];
 	for (var j = 0; j < lst.length; j++){
   		curphone = lst[j];
-  		newpt = [phone["corner"]["x"], phone["corner"]["y"]]
-  		newpt[0] -= translationx
-  		newpt[1] -= translationy
+  		newpt = [phone["corner"]["x"], phone["corner"]["y"]];
+  		newpt[0] += translationx;
+  		newpt[1] += translationy;
   		newlst.push(newpt);
 	}
 	return newlst;
+}
+
+function translatePoint(translatex, translatey, pointx, pointy) {
+	return [translatex + pointx, translatey + pointy];
 }
 
 function scale(factor, lst, phone, center_of_zoom) {
