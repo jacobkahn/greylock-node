@@ -44,20 +44,32 @@ function getSubPhoneDisplay (anchorx, anchory, image_sizex, image_sizey, phone_s
 
 function getAnchorDisplacement (anchorx, anchory, lst) {
 	/**
-	Takes in the current coordinates of anchor and a list of phones, and outputs the position of the phone relative to the anchor
+	Takes in the current global coordinates of anchor and a list of phones, and outputs the position of the phone relative to the anchor
 	*/
 	var newlst = [];
 	for (var j = 0; j < lst.length; j++){
   		curphone = myArray[j];
-  		displacement = [curphone["corner"]["x"], curphone["corner"]["y"]]; // rename once decided
-  		displacement[0] += anchorx;
-  		displacement[1] += anchory;
-  		newlst.push(displacement);
+  		newlst.push(globalToPhone(anchorx, anchory, curphone));
 	}
 	return newlst;
 }
 
-function scale(factor, lst) {
+function phoneToGlobal(pointx, pointy, phone) {
+	var lst = [pointx, pointy];
+	lst[0] += phone["corner"]["x"];
+	lst[1] += phone["corner"]["y"];
+	return lst;
+
+}
+
+function globalToPhone(pointx, pointy, phone) {
+	var lst = [pointx, pointy];
+	lst[0] -= phone["corner"]["x"];
+	lst[1] -= phone["corner"]["y"];
+	return lst;
+}
+
+function scale(factor, lst, phone, center_of_zoom) {
 	/** 
 	Takes in a list of phones, rescales the top corner when zoom input is detected
 	*/
