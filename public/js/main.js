@@ -84,7 +84,19 @@ $(document).ready(function() {
         x: item.top,
         y: item.left,
       }
-    })
+    });
+
+    // draw fancy shit
+    // var particle, theta, force, touch, max, i, j, n;
+
+    for (var i = 0; i < window.magic.touches.length; i++) {
+
+      var touch = window.magic.touches[i];
+      var max = Math.round(Math.random() * 4);
+      for (var j = 0; j < max; j++) {
+        window.magic.spawn(event.pageX, event.pageY - 50);
+      };
+    }
   }
 
   // this is used later in the resizing and gesture demos
