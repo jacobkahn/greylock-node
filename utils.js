@@ -55,6 +55,9 @@ function getAnchorDisplacement (anchorx, anchory, lst) {
 }
 
 function phoneToGlobal(pointx, pointy, phone) {
+	/**
+	Takes in a point in a phone's coordinate frame, and transforms it into global frame.
+	*/
 	var lst = [pointx, pointy];
 	lst[0] += phone["corner"]["x"];
 	lst[1] += phone["corner"]["y"];
@@ -63,6 +66,9 @@ function phoneToGlobal(pointx, pointy, phone) {
 }
 
 function globalToPhone(pointx, pointy, phone) {
+	/**
+	Takes in a point in global frame, and transforms it into a phone's frame.
+	*/
 	var lst = [pointx, pointy];
 	lst[0] -= phone["corner"]["x"];
 	lst[1] -= phone["corner"]["y"];
