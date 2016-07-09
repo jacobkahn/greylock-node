@@ -1,4 +1,4 @@
-var Waterline = require('Waterline');
+var Waterline = require('waterline');
 
 var Device = Waterline.Collection.extend({
   identity: 'device',
