@@ -62,6 +62,26 @@ function phoneToGlobal(pointx, pointy, phone) {
 
 }
 
+function calculateGlobalOffsetFromInitialAnchor(x, y, session) {
+	var globalVerticalOffset = Number(data.anchor.y);
+	var globalHorizontalOffset = Number(data.anchor.x);
+	console.log('Moving from, before calcs ', globalHorizontalOffset, globalVerticalOffset);
+	var phoneAbove = session['devices'][data.phone_id]['neighbors']['up'];
+	while (phoneAbove) {
+	  globalVerticalOffset += Number(session['devices'][phoneAbove]['screenHeight']);
+	  phoneAbove = session['devices'][phoneAbove]['neighbors']['up'];
+	}
+	var phoneLeft = session['devices'][data.phone_id]['neighbors']['left'];
+	console.log(data.phone_id, '\n', JSON.stringify(session['devices'][data.phone_id]));
+	console.log(phoneLeft);
+	while (phoneLeft) {
+	  console.log('found a phone to the left with offset called ', phoneLeft, Number(session['devices'][phoneLeft]['screenWidth']));
+	  globalHorizontalOffset += Number(session['devices'][phoneLeft]['screenWidth']);
+	  phoneLeft = session['devices'][phoneLeft]['neighbors']['left'];
+	}
+	return {globalVerticalOffset : globalVerticalOffset, globalHorizontalOffset: globalHorizontalOffset};
+}
+
 function globalToPhone(pointx, pointy, phone) {
 	/**
 	Takes in a point in global frame, and transforms it into a phone's frame.
@@ -122,8 +142,4 @@ console.log(getSubPhoneDisplay(anchorx, anchory, image_sizex, image_sizey, phone
 console.log(getSubImage(anchorx, anchory, image_sizex, image_sizey, phone_sizex, phone_sizey))
 
 
-module.exports = { utils:
-	{ 
-		phoneToGlobal: phoneToGlobal,
-	}
-};
+module.exports = {calculateGlobalOffsetFromInitialAnchor: calculateGlobalOffsetFromInitialAnchor};

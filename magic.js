@@ -19,22 +19,9 @@ io.on('connection', function(socket) {
     client.get('session-' + sessionID, function (err, result) {
       var session = JSON.parse(result);
 
-      var globalVerticalOffset = Number(data.anchor.y);
-      var globalHorizontalOffset = Number(data.anchor.x);
-      console.log('Moving from, before calcs ', globalHorizontalOffset, globalVerticalOffset);
-      var phoneAbove = session['devices'][data.phone_id]['neighbors']['up'];
-      while (phoneAbove) {
-        globalVerticalOffset += Number(session['devices'][phoneAbove]['screenHeight']);
-        phoneAbove = session['devices'][phoneAbove]['neighbors']['up'];
-      }
-      var phoneLeft = session['devices'][data.phone_id]['neighbors']['left'];
-      console.log(data.phone_id, '\n', JSON.stringify(session['devices'][data.phone_id]));
-      console.log(phoneLeft);
-      while (phoneLeft) {
-        console.log('found a phone to the left with offset called ', phoneLeft, Number(session['devices'][phoneLeft]['screenWidth']));
-        globalHorizontalOffset += Number(session['devices'][phoneLeft]['screenWidth']);
-        phoneLeft = session['devices'][phoneLeft]['neighbors']['left'];
-      }
+      var positioning = utils.calculateGlobalOffsetFromInitialAnchor(Number(data.anchor.x), Number(data.anchor.y), session);
+      var globalHorizontalOffset = positioning['globalHorizontalOffset'];
+      var globalVerticalOffset = position['globalVerticalOffset'];
       console.log('Moving from ', globalHorizontalOffset, globalVerticalOffset);
       var responseObj = {};
       Object.keys(session['devices']).forEach(function (deviceID) {
