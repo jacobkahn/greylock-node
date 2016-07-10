@@ -67,8 +67,8 @@ $(document).ready(function() {
   var gestureArea = document.getElementById('item');
   var scaleElement = document.getElementById('picture');
 
-    // target elements with the "draggable" class
-    interact('.draggable')
+  // target elements with the "draggable" class
+  interact('.draggable')
     .draggable({
       // enable inertial throwing
       inertia: true,
@@ -86,36 +86,34 @@ $(document).ready(function() {
       // call this function on every dragmove event
       onmove: dragMoveListener,
     })
-    .gesturable({
-      onstart: function(event) {
-        clearTimeout(window.resetTimeout);
-        scaleElement.classList.remove('reset');
-      },
-      onmove: function(event) {
-        scale = scale * (1 + event.ds);
-
-        // scaleElement.style.webkitTransform =
-        //   scaleElement.style.transform =
-        //   'scale(' + scale + ')';
-
-        gestureArea.style.webkitTransform =
-          gestureArea.style.transform =
-          'scale(' + scale + ')';
-
-        dragMoveListener(event);
-      },
-      onend: function(event) {
-        window.resetTimeout = setTimeout(reset, 100000);
-        scaleElement.classList.add('reset');
+    .resizable({
+      preserveAspectRatio: true,
+      edges: {
+        left: true,
+        right: true,
+        bottom: true,
+        top: true
       }
-    });
+    })
+    .on('resizemove', function(event) {
+      var target = event.target,
+        x = (parseFloat(target.getAttribute('data-x')) || 0),
+        y = (parseFloat(target.getAttribute('data-y')) || 0);
 
-  function reset() {
-    scale = 1;
-    scaleElement.style.webkitTransform =
-      scaleElement.style.transform =
-      'scale(1)';
-  }
+      // update the element's style
+      target.style.width = event.rect.width + 'px';
+      target.style.height = event.rect.height + 'px';
+
+      // translate when resizing from top or left edges
+      x += event.deltaRect.left;
+      y += event.deltaRect.top;
+
+      target.style.webkitTransform = target.style.transform =
+        'translate(' + x + 'px,' + y + 'px)';
+
+      target.setAttribute('data-x', x);
+      target.setAttribute('data-y', y);
+    });
 
   function dragMoveListener(event) {
     var target = event.target,
