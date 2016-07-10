@@ -42,8 +42,8 @@ $(document).ready(function() {
     var anchor = data[window.phone_id].anchor;
     $('#item').css({
       display: 'block',
-      top: anchor.x,
-      left: anchor.y
+      top: anchor.y,
+      left: anchor.x
     });
     $('.info').text('Locally anchored at ' + anchor.left + ', ' + anchor.top);
   });
