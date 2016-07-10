@@ -19,9 +19,9 @@ io.on('connection', function(socket) {
     client.get('session-' + sessionID, function (err, result) {
       var session = JSON.parse(result);
 
-      var positioning = utils.calculateGlobalOffsetFromInitialAnchor(Number(data.anchor.x), Number(data.anchor.y), session, deviceID);
+      var positioning = utils.calculateGlobalOffsetFromInitialAnchor(Number(data.anchor.x), Number(data.anchor.y), session, data.phone_id);
       var globalHorizontalOffset = positioning['globalHorizontalOffset'];
-      var globalVerticalOffset = position['globalVerticalOffset'];
+      var globalVerticalOffset = positioning['globalVerticalOffset'];
       console.log('Moving from ', globalHorizontalOffset, globalVerticalOffset);
       var responseObj = {};
       Object.keys(session['devices']).forEach(function (deviceID) {
