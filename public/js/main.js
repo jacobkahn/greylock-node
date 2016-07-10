@@ -87,6 +87,10 @@ $(document).ready(function() {
       onmove: dragMoveListener,
     })
     .gesturable({
+      onstart: function(event) {
+        clearTimeout(window.resetTimeout);
+        scaleElement.classList.remove('reset');
+      },
       onmove: function(event) {
         scale = scale * (1 + event.ds);
 
@@ -94,12 +98,20 @@ $(document).ready(function() {
           scaleElement.style.transform =
           'scale(' + scale + ')';
 
-        gestureArea.style.webkitTransform =
-          gestureArea.style.transform = 
-          'scale(' + scale + ')';
         dragMoveListener(event);
       },
+      onend: function(event) {
+        window.resetTimeout = setTimeout(reset, 1000);
+        scaleElement.classList.add('reset');
+      }
     });
+
+  function reset() {
+    scale = 1;
+    scaleElement.style.webkitTransform =
+      scaleElement.style.transform =
+      'scale(1)';
+  }
 
   function dragMoveListener(event) {
     var target = event.target,
