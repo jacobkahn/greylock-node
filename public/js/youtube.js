@@ -36,21 +36,31 @@ $(document).ready(function() {
 
   $('#player').css({
     left: window.anchor.x,
-    top: window.anchor.y
+    top: window.anchor.y,
   });
 
+  // 2. This code loads the IFrame Player API code asynchronously.
+  var tag = document.createElement('script');
+
+  tag.src = "https://www.youtube.com/iframe_api";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+  var player;
   function onYouTubeIframeAPIReady() {
     console.log('triggered');
     player = new YT.Player('player', {
       height: String(window.global_height),
       width: String(window.global_width),
       controls: 0,
-      enablejsapi: 1,
-      fs: 0,
-      iv_load_policy: 3,
-      modestbranding: 1,
-      playsinline: 1,
-      rel: 0,
+      playerVars: {
+        enablejsapi: 1,
+        fs: 0,
+        iv_load_policy: 3,
+        modestbranding: 1,
+        playsinline: 1,
+        rel: 0
+      },
       videoId: 'bzD8H6o1awQ',
       events: {
         'onReady': onPlayerReady,
@@ -63,6 +73,7 @@ $(document).ready(function() {
   function onPlayerReady(event) {
     // event.target.playVideo();
     window.player = event.target;
+    console.log('I am ready to play');
     window.socket.emit('video_ready', {
       session_id: window.session_id,
       phone_id: window.phone_id,
