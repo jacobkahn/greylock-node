@@ -135,6 +135,7 @@ router.post('/calibrate', function (req, res, next) {
     var numberCalibrated = getNumberCalibrated(session);
     if (numberCalibrated === Number(session['count'])) {
       session = generatePhonePointers(session);
+      session['sortedDeviceIDs'] = generateSortedDeviceIDs(session);
       session = calculateGlobalOffsets(session);
     }
     client.set('session-' + sessionID, JSON.stringify(session), function (err, result) {

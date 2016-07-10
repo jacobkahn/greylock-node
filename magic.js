@@ -33,7 +33,7 @@ io.on('connection', function(socket) {
       }
       var responseObj = {};
       Object.keys(session['devices']).forEach(function (deviceID) {
-        reponseObj[deviceID] = {
+        responseObj[deviceID] = {
           anchor: {
             x: globalVerticalOffset - session['devices'][data.phone_id]['virtualVerticalOffset'],
             y: globalHorizontalOffset - session['devices'][data.phone_id]['virtualHorizontalOffset'],
