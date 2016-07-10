@@ -53,9 +53,27 @@ router.get('/youtube/:session_id/:phone_id', function(req, res, next) {
   });
 });
 
-router.get('/bird', function (req, res, next) {
-  res.render('bird', {
+router.get('/bird/:session_id/:phone_id', function (req, res, next) {
+  var sessionID = req.params.session_id;
+  var phoneID = req.params.phone_id;
+  client.get('session-' + sessionID, function(err, result) {
+    var session = JSON.parse(result);
+    var positioning = utils.calculateGlobalOffsetFromInitialAnchor(0, 0, session, phoneID);
+    var globalHorizontalOffset = positioning['globalHorizontalOffset'] * -1;
+    var globalVerticalOffset = positioning['globalVerticalOffset'] * -1;
 
+    var globalCanvasDimensions = utils.calculateGlobalCanvasDimensions(session);
+
+    res.render('bird', {
+      phone_id: phoneID,
+      session_id: sessionID,
+      anchor: {
+        x: globalHorizontalOffset,
+        y: globalVerticalOffset,
+      },
+      global_width: globalCanvasDimensions['horizontal'],
+      global_height: globalCanvasDimensions['vertical']
+    });
   });
 });
 
