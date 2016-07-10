@@ -2,6 +2,7 @@ var express = require('express');
 var hat = require('hat');
 var client = require('../db/db');
 var moment = require('moment');
+var utils = require('../utils');
 
 var router = express.Router();
 
@@ -169,26 +170,6 @@ var getNumberCalibrated = function (session) {
 	return numberCalibrated;
 }
 
-var calculateGlobalOffsets = function (session) {
-	Object.keys(session['devices']).forEach(function (deviceID) {
-	    var virtualVerticalOffset = 0;
-	    var virtualHorizontalOffset = 0;
-	    var phoneAbove = session['devices'][deviceID]['neighbors']['up'];
-	    while (phoneAbove) {
-	      virtualVerticalOffset += Number(session['devices'][phoneAbove]['screenHeight']);
-	      phoneAbove = session['devices'][phoneAbove]['neighbors']['up'];
-	    }
-	    var phoneLeft = session['devices'][deviceID]['neighbors']['left'];
-	    while (phoneLeft) {
-	      virtualHorizontalOffset += Number(session['devices'][phoneLeft]['screenWidth']);
-	      phoneLeft = session['devices'][phoneLeft]['neighbors']['left'];
-	    }
-	    session['devices'][deviceID]['virtualVerticalOffset'] = virtualVerticalOffset;
-	    session['devices'][deviceID]['virtualHorizontalOffset'] = virtualHorizontalOffset;
-	});
-	return session;
-}
-
 router.post('/calibrate', function (req, res, next) {
   var sessionID = req.body.session_id;
   var deviceID = req.body.phone_id;
@@ -208,7 +189,7 @@ router.post('/calibrate', function (req, res, next) {
     if (numberCalibrated === Number(session['count'])) {
       session = generatePhonePointers(session);
       session['sortedDeviceIDs'] = generateSortedDeviceIDs(session);
-      session = calculateGlobalOffsets(session);
+      session = utils.calculateGlobalOffsets(session);
     }
     client.set('session-' + sessionID, JSON.stringify(session), function (err, result) {
       console.log('creating session with data', JSON.stringify(session));

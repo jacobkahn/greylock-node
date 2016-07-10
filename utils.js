@@ -34,4 +34,25 @@ module.exports = {
     }
     return {globalVerticalOffset: globalVerticalOffset, globalHorizontalOffset: globalHorizontalOffset};
   },
+  
+  calculateGlobalOffsets: function (session) {
+  Object.keys(session['devices']).forEach(function (deviceID) {
+      var virtualVerticalOffset = 0;
+      var virtualHorizontalOffset = 0;
+      var phoneAbove = session['devices'][deviceID]['neighbors']['up'];
+      while (phoneAbove) {
+        virtualVerticalOffset += Number(session['devices'][phoneAbove]['screenHeight']);
+        phoneAbove = session['devices'][phoneAbove]['neighbors']['up'];
+      }
+      var phoneLeft = session['devices'][deviceID]['neighbors']['left'];
+      while (phoneLeft) {
+        virtualHorizontalOffset += Number(session['devices'][phoneLeft]['screenWidth']);
+        phoneLeft = session['devices'][phoneLeft]['neighbors']['left'];
+      }
+      session['devices'][deviceID]['virtualVerticalOffset'] = virtualVerticalOffset;
+      session['devices'][deviceID]['virtualHorizontalOffset'] = virtualHorizontalOffset;
+  });
+  return session;
+}
+
 };

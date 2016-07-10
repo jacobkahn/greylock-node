@@ -42,6 +42,10 @@ $(document).ready(function() {
     window.player.playVideo();
   });
 
+  window.socket.on('reload', function () {
+    window.location.reload();
+  });
+
   window.socket.on('wait_on_vidoe', function(data) {
     window.player.pauseVideo();
   });
