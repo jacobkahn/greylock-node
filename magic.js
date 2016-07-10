@@ -17,7 +17,7 @@ io.on('connection', function(socket) {
     console.log(data.anchor);
     // calculate new_data
     var sessionID = data.session_id;
-    client.set('session-' + sessionID, JSON.stringify(session), function (err, result) {
+    client.get('session-' + sessionID, function (err, result) {
       var session = JSON.parse(result);
 
       var globalVerticalOffset = data.anchor.y;
