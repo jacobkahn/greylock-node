@@ -17,13 +17,13 @@ $(document).ready(function() {
     overlow: 'hidden',
   });
 
-  $('body').on({
-    'mousewheel': function(e) {
-      if (e.target.id == 'el') return;
-      e.preventDefault();
-      e.stopPropagation();
-    }
-  });
+  // $('body').on({
+  //   'mousewheel': function(e) {
+  //     if (e.target.id == 'el') return;
+  //     e.preventDefault();
+  //     e.stopPropagation();
+  //   }
+  // });
 
   $('#item').css({
     transform: `translate(${window.anchor.x}px, ${window.anchor.y}px)`,
@@ -84,7 +84,7 @@ $(document).ready(function() {
       snap: false,
 
       // call this function on every dragmove event
-      // onmove: dragMoveListener,
+      onmove: dragMoveListener,
     });
 
     interact('.scalable')
