@@ -81,6 +81,8 @@ var generatePhonePointers = function (session) {
     session['devices'][sortedDeviceIDs[1]]['neighbors'] = {
       left: sortedDeviceIDs[0],
     };
+  } else if (Number(session['count']) === 4) {
+  	
   }
   return session;
 };
@@ -133,7 +135,6 @@ router.post('/calibrate', function (req, res, next) {
     if (numberCalibrated === Number(session['count'])) {
       session = generatePhonePointers(session);
       session['sortedDeviceIDs'] = generateSortedDeviceIDs(session);
-      console.log(session['sortedDeviceIDs']);
       session = calculateGlobalOffsets(session);
     }
     client.set('session-' + sessionID, JSON.stringify(session), function (err, result) {
