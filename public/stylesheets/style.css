@@ -27,7 +27,7 @@ a {
 .item {
     position: absolute;
     width: 250px;
-    height: 250px;
+    height: 445px;
     background: rgba(0, 0, 0, 0.3);
     border-radius: 5%;
     overflow: hidden;
@@ -37,7 +37,7 @@ img {
     padding: 10px;
     height: auto;
     width: 230px;
-    height: 230px;
+    height: 425px;
     border-radius: 5%;
     opacity: 0.9;
 }
