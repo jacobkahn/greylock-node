@@ -28,7 +28,7 @@ a {
     position: absolute;
     width: 250px;
     height: 250px;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.3);
     border-radius: 50%;
     overflow: hidden;
 }
