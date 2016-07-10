@@ -35,7 +35,6 @@ io.on('connection', function(socket) {
   });
 
   socket.on('video_ready', function (data) {
-    console.log('video_ready event');
     var deviceID = data.phone_id;
     var sessionID = data.session_id;
     client.get('session-' + sessionID, function (err, result) {
