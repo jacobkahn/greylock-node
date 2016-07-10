@@ -47,7 +47,7 @@ $(document).ready(function() {
   window.socket.on('item_draw', function(data) {
     // TODO: change this to filter only information relevant to this client
     var anchor = data[window.phone_id].anchor;
-    consoe.log(JSON.stringify(anchor));
+    console.log(JSON.stringify(anchor));
     $('#item').css({
       display: 'block',
       transform: `translate(${anchor.x}px, ${anchor.y}px)`,
