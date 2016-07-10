@@ -28,7 +28,7 @@ $(document).ready(function() {
   // add focus to the item
   $('.info').text('Locally anchored at 0, 0').focus();
 
-  if (window.isFirst = 'false') {
+  if (window.isFirst == 0) {
     $('#item').hide();
   }
 
