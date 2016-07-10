@@ -43,7 +43,9 @@ $(document).ready(function() {
     console.log(anchor);
     $('#item').css({
       display: 'block',
-      transform: `(${anchor.x}px, ${anchor.y}px)`
+      transform: `translate(${anchor.x}px, ${anchor.y}px)`,
+      '-webkit-transform': `translate(${anchor.x}px, ${anchor.y}px)`,
+      '-ms-transform': `translate(${anchor.x}px, ${anchor.y}px)`
     });
     $('.info').text('Locally anchored at ' + anchor.x + ', ' + anchor.y);
   });
