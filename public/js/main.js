@@ -25,9 +25,23 @@ $(document).ready(function() {
     }
   });
 
+  // add focus to the item
+  $('.info').text('Locally anchored at 0, 0').focus();
+
   // ----------------------------- SOCKET ----------------------------------
   window.socket = io();
   // -----------------------------------------------------------------------
+  
+
+  window.socket.on('item_draw', function(data) {
+    // TODO: change this to filter only information relevant to this client
+    var anchor = data[window.phone_id].anchor;
+    $('#item').css({
+      top: anchor.x,
+      left: anchor.y
+    });
+    $('.info').text('Locally anchored at ' + anchor.left + ', ' + anchor.top);
+  });
 
   var ITEM_WIDTH = $('.item').css('width');
   var ITEM_HEIGHT = $('.item').css('height');
@@ -77,13 +91,15 @@ $(document).ready(function() {
 
     var item = interact.getElementRect(event.target);
 
-    textEl && (textEl.textContent = 'Anchored at ' + item.left + ', ' + item.top)
+    textEl && (textEl.textContent = 'Locally anchored at ' + item.left + ', ' + item.top)
 
     window.socket.emit('item_move', {
       anchor: {
         x: item.top,
         y: item.left,
-      }
+      },
+      session_id: window.session_id,
+      phone_id: window.phone_id,
     });
 
     // draw fancy shit
