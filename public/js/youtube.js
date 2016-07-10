@@ -97,6 +97,7 @@ $(document).ready(function() {
       window.buffering = true;
     } else if (state == 1) {
       if (window.buffering == true) {
+        window.buffering = false;
         window.player.pauseVideo();
         window.socket.emit('video_ready', {
           session_id: window.session_id,
