@@ -103,8 +103,8 @@ $(document).ready(function() {
 
     window.socket.emit('item_move', {
       anchor: {
-        x: item.top,
-        y: item.left,
+        x: item.left,
+        y: item.top,
       },
       session_id: window.session_id,
       phone_id: window.phone_id,
