@@ -31,7 +31,7 @@ $(document).ready(function() {
   // ----------------------------- SOCKET ----------------------------------
   window.socket = io();
   // -----------------------------------------------------------------------
-  
+
 
   window.socket.on('item_draw', function(data) {
     // TODO: change this to filter only information relevant to this client
@@ -93,6 +93,8 @@ $(document).ready(function() {
 
     textEl && (textEl.textContent = 'Locally anchored at ' + item.left + ', ' + item.top)
 
+    console.log(window.session_id, window.phone_id);
+
     window.socket.emit('item_move', {
       anchor: {
         x: item.top,
@@ -103,7 +105,6 @@ $(document).ready(function() {
     });
 
     // draw fancy shit
-    // var particle, theta, force, touch, max, i, j, n;
 
     for (var i = 0; i < window.magic.touches.length; i++) {
 
