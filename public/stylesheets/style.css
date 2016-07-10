@@ -48,7 +48,7 @@ img {
     padding: 25px;
 }
 
-#pictures {
+#picture {
     -webkit-transform: rotate(90deg);
     -moz-transform: rotate(90deg);
     -o-transform: rotate(90deg);
