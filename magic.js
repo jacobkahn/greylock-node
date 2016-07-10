@@ -19,27 +19,33 @@ io.on('connection', function(socket) {
     client.get('session-' + sessionID, function (err, result) {
       var session = JSON.parse(result);
 
-      var globalVerticalOffset = data.anchor.y;
-      var globalHorizontalOffset = data.anchor.x;
+      var globalVerticalOffset = Number(data.anchor.y);
+      var globalHorizontalOffset = Number(data.anchor.x);
+      console.log('Moving from, before calcs ', globalHorizontalOffset, globalVerticalOffset);
       var phoneAbove = session['devices'][data.phone_id]['neighbors']['up'];
       while (phoneAbove) {
-        verticalOffset += session['devices'][phoneAbove]['screenHeight'];
+        globalVerticalOffset += Number(session['devices'][phoneAbove]['screenHeight']);
         phoneAbove = session['devices'][phoneAbove]['neighbors']['up'];
       }
       var phoneLeft = session['devices'][data.phone_id]['neighbors']['left'];
+      console.log(data.phone_id, '\n', JSON.stringify(session['devices'][data.phone_id]));
+      console.log(phoneLeft);
       while (phoneLeft) {
-        horizontalOffset += session['devices'][phoneLeft]['screenHeight'];
+        console.log('found a phone to the left with offset called ', phoneLeft, Number(session['devices'][phoneLeft]['screenWidth']));
+        globalHorizontalOffset += Number(session['devices'][phoneLeft]['screenWidth']);
         phoneLeft = session['devices'][phoneLeft]['neighbors']['left'];
       }
+      console.log('Moving from ', globalHorizontalOffset, globalVerticalOffset);
       var responseObj = {};
       Object.keys(session['devices']).forEach(function (deviceID) {
         responseObj[deviceID] = {
           anchor: {
-            y: globalVerticalOffset - session['devices'][data.phone_id]['virtualVerticalOffset'],
-            x: globalHorizontalOffset - session['devices'][data.phone_id]['virtualHorizontalOffset'],
+            y: globalVerticalOffset - session['devices'][deviceID]['virtualVerticalOffset'],
+            x: globalHorizontalOffset - session['devices'][deviceID]['virtualHorizontalOffset'],
           }
         };
       });
+      console.log(JSON.stringify(responseObj));
       socket.broadcast.emit('item_draw', responseObj);
     });
   });
