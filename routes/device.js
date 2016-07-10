@@ -2,6 +2,7 @@ var express = require('express');
 var hat = require('hat');
 var client = require('../db/db');
 var moment = require('moment');
+var utils = require('../utils');
 
 var router = express.Router();
 
