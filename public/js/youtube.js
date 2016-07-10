@@ -46,7 +46,7 @@ $(document).ready(function() {
     window.location.reload();
   });
 
-  window.socket.on('wait_on_vidoe', function(data) {
+  window.socket.on('wait_on_video', function(data) {
     window.player.pauseVideo();
   });
 
