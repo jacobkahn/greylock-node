@@ -107,7 +107,7 @@ $(document).ready(function() {
       var item = $('#item');
       item.css({
         width: event.rect.width - 20+ 'px',
-        height: event.rect.height - 20+ 'px';
+        height: event.rect.height - 20+ 'px'
       });
 
       // translate when resizing from top or left edges
