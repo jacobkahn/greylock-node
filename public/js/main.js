@@ -25,12 +25,18 @@ $(document).ready(function() {
     }
   });
 
-  // add focus to the item
-  $('.info').text('Locally anchored at 0, 0').focus();
+  $('#item').css({
+    left: window.anchor.x,
+    top: window.anchor.y,
+  });
 
-  if (window.isFirst == 0) {
-    $('#item').hide();
-  }
+  // add focus to the item
+  var item = $('#item');
+  $(item).data('x', window.anchor.x);
+  $(item).data('y', window.anchor.y);
+  var x = $(item).data('x');
+  var y = $(item).data('y');
+  $('.info').text(`Locally anchored at ${x}, ${y}`).focus();
 
   // ----------------------------- SOCKET ----------------------------------
   window.socket = io();
@@ -40,15 +46,13 @@ $(document).ready(function() {
   window.socket.on('item_draw', function(data) {
     // TODO: change this to filter only information relevant to this client
     var anchor = data[window.phone_id].anchor;
+    console.log(anchor);
     $('#item').css({
       display: 'block',
       transform: `translate(${anchor.x}px, ${anchor.y}px)`,
       '-webkit-transform': `translate(${anchor.x}px, ${anchor.y}px)`,
       '-ms-transform': `translate(${anchor.x}px, ${anchor.y}px)`
     });
-    $('#item').data('x', anchor.x);
-    $('#item').data('y', anchor.y);
-    console.log($('#item').data())
     $('.info').text('Locally anchored at ' + anchor.x + ', ' + anchor.y);
   });
 
@@ -90,9 +94,6 @@ $(document).ready(function() {
     target.setAttribute('data-x', x);
     target.setAttribute('data-y', y);
 
-    $('#item').data('x', x);
-    $('#item').data('y', y);
-
     // ------------------ render diagnostic information ------------------
 
     var textEl = event.target.querySelector('p');
@@ -105,11 +106,12 @@ $(document).ready(function() {
 
     textEl && (textEl.textContent = 'Locally anchored at ' + item.left + ', ' + item.top)
 
-    console.log($('#item').data());
+    console.log(window.session_id, window.phone_id);
+
     window.socket.emit('item_move', {
       anchor: {
-        x: $('#item').data('x'),
-        y: $('#item').data('y'),
+        x: item.left,
+        y: item.top,
       },
       session_id: window.session_id,
       phone_id: window.phone_id,
