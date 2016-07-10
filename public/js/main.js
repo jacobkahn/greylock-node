@@ -98,6 +98,10 @@ $(document).ready(function() {
           scaleElement.style.transform =
           'scale(' + scale + ')';
 
+        gestureArea.style.webkitTransform =
+          gestureArea.style.transform =
+          'scale(' + scale + ')';
+
         dragMoveListener(event);
       },
       onend: function(event) {
@@ -108,9 +112,9 @@ $(document).ready(function() {
 
   function reset() {
     scale = 1;
-    scaleElement.style.webkitTransform =
-      scaleElement.style.transform =
-      'scale(1)';
+    // scaleElement.style.webkitTransform =
+    //   scaleElement.style.transform =
+    //   'scale(1)';
   }
 
   function dragMoveListener(event) {
