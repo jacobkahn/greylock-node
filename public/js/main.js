@@ -56,6 +56,8 @@ $(document).ready(function() {
     });
     $('#item').data('x', anchor.x);
     $('#item').data('y', anchor.y);
+    target.setAttribute('data-x', x);
+    target.setAttribute('data-y', y);
     $('.info').text('Locally anchored at ' + anchor.x + ', ' + anchor.y);
   });
 
