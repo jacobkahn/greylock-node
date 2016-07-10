@@ -9,6 +9,8 @@ router.get('/page/:session_id/:phone_id', function(req, res, next) {
   client.get('session-' + sessionID, function (err, result) {
     var session = JSON.parse(result);
     console.log('first_phone_id', session['sortedDeviceIDs'][0]);
+    console.log('phoneID', phoneID);
+    console.log(String(session['sortedDeviceIDs'][0] == phoneID));
     res.render('index', {
       title: 'Express',
       phone_id: phoneID,
