@@ -1,10 +1,8 @@
 module.exports = {
   calculateGlobalCanvasDimensions: function (session) {
-    console.log(JSON.stringify(session));
     var firstPhoneID = session['sortedDeviceIDs'][0];
     var globalVerticalOffset = Number(session['devices'][firstPhoneID]['screenHeight']);
     var globalHorizontalOffset = Number(session['devices'][firstPhoneID]['screenWidth']);
-    console.log(firstPhoneID, globalHorizontalOffset);
     var phoneBelow = session['devices'][firstPhoneID]['neighbors']['down'];
     while (phoneBelow) {
       globalVerticalOffset += Number(session['devices'][phoneBelow]['screenHeight']);
@@ -12,7 +10,6 @@ module.exports = {
     }
     var phoneRight = session['devices'][firstPhoneID]['neighbors']['right'];
     while (phoneRight) {
-      console.log(phoneRight, globalHorizontalOffset);
       globalHorizontalOffset += Number(session['devices'][phoneRight]['screenWidth']);
       phoneRight = session['devices'][phoneRight]['neighbors']['right'];
     }
