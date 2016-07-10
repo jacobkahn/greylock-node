@@ -114,6 +114,8 @@ var calculateGlobalOffsets = function (session) {
 	    }
 	    session['devices'][deviceID]['virtualVerticalOffset'] = virtualVerticalOffset;
 	    session['devices'][deviceID]['virtualHorizontalOffset'] = virtualHorizontalOffset;
+	    console.log(virtualHorizontalOffset);
+	    console.log(virtualVerticalOffset);
 	});
 	return session;
 }
