@@ -69,6 +69,10 @@ $(document).ready(function() {
     // $('.info').text('Locally anchored at ' + anchor.x + ', ' + anchor.y);
   });
 
+  window.socket.on('reload', function () {
+    window.location.reload();
+  });
+
   window.socket.on('resize_image', function(data) {
     $('#item').css({
       width: data.width + 'px',

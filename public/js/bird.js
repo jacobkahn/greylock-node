@@ -309,6 +309,10 @@ window.socket.on('death', function() {
    window.isClickedByJS = true;
 });
 
+window.socket.on('reload', function () {
+   window.location.reload();
+});
+
 function screenClick() {
 
    if (currentstate == states.GameScreen) {

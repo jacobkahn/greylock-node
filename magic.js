@@ -72,14 +72,34 @@ io.on('connection', function(socket) {
   });
 
   socket.on('bird_click', function (data) {
-    console.log('bird_click', data.is_replay);
-    console.log('from touch?', data.from)
     socket.broadcast.emit('bird_click', {is_replay: data.is_replay});
   });
 
   socket.on('death', function () {
-    console.log('death');
     socket.broadcast.emit('death', {});
-  })
+  });
+
+  socket.on('flip', function (data) {
+    var sessionID = data.session_id;
+    var deviceID = data.phone_did;
+    var orientation = data.orientation;
+    // if (orientation === 'landscape') {
+
+    // } else if (orientation == 'portrait') {
+
+    // }
+    client.get('session-' + sessionID, function (err, result) {
+      var session = JSON.parse(result);
+      var sHeight = session['devices'][deviceID]['screenHeight'];
+      session['devices'][deviceID]['screenHeight'] = session['devices'][deviceID]['screenWidth'];
+      session['devices'][deviceID]['screenWidth'] = sHeight;
+      session = utils.calculateGlobalOffsets(session);
+      client.set('session-' + sessionID, JSON.stringify(session), function (err, newResult) {
+        io.sockets.emit('reload', {
+          reload: 'true'
+        });
+      });
+    });
+  });
 
 });
