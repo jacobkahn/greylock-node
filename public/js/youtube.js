@@ -31,6 +31,7 @@ $(document).ready(function() {
 
   window.socket.on('play_video', function(data) {
     console.log('EVERYONE IS READY!!!!!');
+    window.pausedBYJS = false;
     window.player.playVideo();
   });
 
@@ -103,12 +104,13 @@ $(document).ready(function() {
         console.log('video playing!')
         window.buffering = false;
         window.player.pauseVideo();
+        window.pausedBYJS = true;
         window.socket.emit('video_ready', {
           session_id: window.session_id,
           phone_id: window.phone_id,
         });
       }
-    } else if (state == 2 && window.isFirstPause) {
+    } else if (state == 2 && window.isFirstPause && !window.pausedBYJS) {
       console.log('video paused');
       window.isFirstPause = false;
       window.socket.emit('video_pause', {
