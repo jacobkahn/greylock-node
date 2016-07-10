@@ -85,7 +85,9 @@ $(document).ready(function() {
 
       // call this function on every dragmove event
       onmove: dragMoveListener,
-    })
+    });
+
+    interact('.scalable')
     .gesturable({
       onstart: function(event) {
         clearTimeout(window.resetTimeout);
