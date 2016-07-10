@@ -29,6 +29,7 @@ io.on('connection', function(socket) {
       }
       var phoneLeft = session['devices'][data.phone_id]['neighbors']['left'];
       while (phoneLeft) {
+        console.log('found a phone to the left with offset called ', phoneLeft, Number(session['devices'][phoneLeft]['screenWidth']));
         globalHorizontalOffset += Number(session['devices'][phoneLeft]['screenWidth']);
         phoneLeft = session['devices'][phoneLeft]['neighbors']['left'];
       }
