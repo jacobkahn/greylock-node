@@ -25,9 +25,10 @@ a {
 }
 
 .item {
+    padding: 10px;
     position: absolute;
-    width: 150px;
-    height: 150px;
+    max-width: 250px;
+    max-height: 250px;
     background: rgba(0, 0, 0, 0.7);
     border-radius: 50%;
 }
