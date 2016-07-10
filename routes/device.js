@@ -95,6 +95,26 @@ var getNumberCalibrated = function (session) {
 	return numberCalibrated;
 }
 
+var calculateGlobalOffsets = function (session) {
+	Object.keys(session['devices']).forEach(function (deviceID) {
+	    var virtualVerticalOffset = 0;
+	    var virtualHorizontalOffset = 0;
+	    var phoneAbove = session['devices'][deviceID]['neighbors']['up'];
+	    while (phoneAbove !== null) {
+	      verticalOffset += session['devices'][phoneAbove]['screenHeight'];
+	      phoneAbove = session['devices'][phoneAbove]['neighbors']['up'];
+	    }
+	    var phoneLeft = session['devices'][deviceID]['neighbors']['left'];
+	    while (phoneLeft !== null) {
+	      horizontalOffset += session['devices'][phoneLeft]['screenHeight'];
+	      phoneLeft = session['devices'][phoneLeft]['neighbors']['left'];
+	    }
+	    session['devices'][deviceID]['virtualVerticalOffset'] = virtualVerticalOffset;
+	    session['devices'][deviceID]['virtualHorizontalOffset'] = virtualHorizontalOffset;
+	});
+	return session;
+}
+
 router.post('/calibrate', function (req, res, next) {
   var sessionID = req.body.session_id;
   var deviceID = req.body.phone_id;
