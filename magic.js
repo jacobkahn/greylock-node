@@ -41,7 +41,6 @@ io.on('connection', function(socket) {
         var session = JSON.parse(result);
         session['devices'][deviceID]['youtubeClientLoaded'] = 'true';
         client.set('session-' + sessionID, JSON.stringify(session), function (err, newResult) {
-          var newSession = JSON.parse(newResult);
           // Check to see if everyone else has completed
           var allClientsFinished = true;
           Object.keys(session['devices']).forEach(function (device) {
@@ -50,7 +49,7 @@ io.on('connection', function(socket) {
             }
           });
           if (allClientsFinished) {
-            socket.broadcast.emit('item_draw', responseObj);
+            io.sockets.emit('play_video', {});
           }
       });
     });
