@@ -77,11 +77,13 @@ $(document).ready(function() {
 
   // 4. The API will call this function when the video player is ready.
   function onPlayerReady(event) {
-    // event.target.playVideo();
-    window.player = event.target;
-    console.log('I am ready to play');
-    window.player.playVideo();
-
+    if (!window.READY) {
+      // event.target.playVideo();
+      window.player = event.target;
+      console.log('I am ready to play');
+      window.player.playVideo();
+      window.READY = true;
+    }
   }
 
   // 5. The API calls this function when the player's state changes.
