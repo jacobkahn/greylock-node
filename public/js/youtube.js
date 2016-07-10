@@ -40,12 +40,13 @@ $(document).ready(function() {
   });
 
   // 2. This code loads the IFrame Player API code asynchronously.
-  var tag = document.createElement('script');
+  // var tag = document.createElement('script');
 
-  tag.src = "https://www.youtube.com/iframe_api";
-  var firstScriptTag = document.getElementsByTagName('script')[0];
-  console.log(firstScriptTag);
-  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  // tag.src = "https://www.youtube.com/iframe_api";
+  // var firstScriptTag = document.getElementsByTagName('script')[0];
+  // console.log(firstScriptTag);
+  // firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  // $(document).append()
 
   var player;
   function onYouTubeIframeAPIReady() {
