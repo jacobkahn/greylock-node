@@ -33,8 +33,4 @@ io.on('connection', function(socket) {
       socket.broadcast.emit('item_draw', responseObj);
     });
   });
-
-  socket.on('flip', function (socket) {
-    
-  });
 });
