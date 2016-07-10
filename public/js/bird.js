@@ -96,6 +96,7 @@ function setCookie(cname,cvalue,exdays)
 
 function showSplash()
 {
+   console.log('showsplash');
    currentstate = states.SplashScreen;
    
    //set the defaults (again)
@@ -192,7 +193,9 @@ function gameloop() {
    //did we hit the ground?
    if(box.bottom >= $("#land").offset().top)
    {
-      playerDead();
+      playerDead(false);
+      window.deathByJS = true;
+      window.isClickedByJS = true;
       return;
    }
    
@@ -235,7 +238,9 @@ function gameloop() {
       else
       {
          //no! we touched the pipe
-         playerDead();
+         playerDead(false);
+         window.deathByJS = true;
+         window.isClickedByJS = true;
          return;
       }
    }
@@ -259,39 +264,52 @@ $(document).keydown(function(e){
    if(e.keyCode == 32)
    {
       //in ScoreScreen, hitting space should click the "replay" button. else it's just a regular spacebar hit
-      if(currentstate == states.ScoreScreen)
+      if(currentstate == states.ScoreScreen) {
+         console.log('hello there i am clicking the thing');
+         window.socket.emit('bird_click', {is_replay: true});
          $("#replay").click();
-      else
-         screenClick(false);
+      } else {
+        window.socket.emit('bird_click', {is_replay: true});
+        screenClick(false);
+      }
    }
 });
 
 //Handle mouse down OR touch start
 if("ontouchstart" in window)
    $(document).on("touchstart", function () {
-      screenClick(false);
+      window.socket.emit('bird_click', {is_replay: false});
    });
 else
    $(document).on("mousedown", function () {
-      screenClick(false);
+      window.socket.emit('bird_click', {is_replay: false});
+      screenClick();
    });
 
 // ----------------------------- SOCKET ----------------------------------
 window.socket = io();
 // -----------------------------------------------------------------------
 
-window.socket.on('bird_flap', function (data) {
-   screenClick(true);
+window.socket.on('bird_click', function (data) {
+   console.log('fail');
+   console.log(data.is_replay);
+   window.isClickedByJS = false;
+   data.is_replay ? replayer() : screenClick();
 });
 
-function screenClick(fromSocket)
-{
-   if (!fromSocket) {
-        window.socket.emit('bird_flap', {});
-   }
+window.socket.on('death', function () {
+   playerDead();
+   window.isClickedByJS = true;
+});
+
+function screenClick()
+{  
+   console.log('received a click', currentstate);
+
    if(currentstate == states.GameScreen)
    {
       playerJump();
+      window.socket.emit('bird_flap', {});
    }
    else if(currentstate == states.SplashScreen)
    {
@@ -363,6 +381,12 @@ function setMedal()
 
 function playerDead()
 {
+   window.isClickedByJS = true;
+   if (window.deathByJS) {
+      window.socket.emit('death', {});
+      window.deathByJS = false;
+   }
+   console.log('playerdead');
    //stop animating everything!
    $(".animated").css('animation-play-state', 'paused');
    $(".animated").css('-webkit-animation-play-state', 'paused');
@@ -383,19 +407,12 @@ function playerDead()
    loopPipeloop = null;
 
    //mobile browsers don't support buzz bindOnce event
-   if(isIncompatible.any())
-   {
-      //skip right to showing score
-      showScore();
-   }
-   else
-   {
-     showScore();
-   }
+   showScore();
 }
 
 function showScore()
 {
+   console.log('showscore');
    //unhide us
    $("#scoreboard").css("display", "block");
    
@@ -435,7 +452,15 @@ function showScore()
    replayclickable = true;
 }
 
-$("#replay").click(function() {
+
+
+function replayer() {
+   console.log(window.isClickedByJS);
+   if (window.isClickedByJS) {
+      window.socket.emit('bird_click', {is_replay: true});
+      window.isClickedByJS = false;
+   }
+   console.log('it is failing');
    //make sure we can only click once
    if(!replayclickable)
       return;
@@ -450,7 +475,10 @@ $("#replay").click(function() {
       //start the game over!
       showSplash();
    });
-});
+};
+
+$("#replay").click(replayer);
+
 
 function playerScore()
 {
@@ -472,28 +500,4 @@ function updatePipes()
    var newpipe = $('<div class="pipe animated"><div class="pipe_upper" style="height: ' + topheight + 'px;"></div><div class="pipe_lower" style="height: ' + bottomheight + 'px;"></div></div>');
    $("#flyarea").append(newpipe);
    pipes.push(newpipe);
-}
-
-var isIncompatible = {
-   Android: function() {
-   return navigator.userAgent.match(/Android/i);
-   },
-   BlackBerry: function() {
-   return navigator.userAgent.match(/BlackBerry/i);
-   },
-   iOS: function() {
-   return navigator.userAgent.match(/iPhone|iPad|iPod/i);
-   },
-   Opera: function() {
-   return navigator.userAgent.match(/Opera Mini/i);
-   },
-   Safari: function() {
-   return (navigator.userAgent.match(/OS X.*Safari/) && ! navigator.userAgent.match(/Chrome/));
-   },
-   Windows: function() {
-   return navigator.userAgent.match(/IEMobile/i);
-   },
-   any: function() {
-   return (isIncompatible.Android() || isIncompatible.BlackBerry() || isIncompatible.iOS() || isIncompatible.Opera() || isIncompatible.Safari() || isIncompatible.Windows());
-   }
 };
