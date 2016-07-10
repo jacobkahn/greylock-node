@@ -15,7 +15,7 @@ router.get('/page/:session_id/:phone_id', function(req, res, next) {
       title: 'Express',
       phone_id: phoneID,
       session_id: sessionID,
-      isFirst: session['sortedDeviceIDs'][0] == phoneID,
+      isFirst: (session['sortedDeviceIDs'][0] == phoneID) ? Number(1) : Number(0),
 	});
   });
 });
