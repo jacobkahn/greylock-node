@@ -17,13 +17,13 @@ $(document).ready(function() {
     overlow: 'hidden',
   });
 
-  // $('body').on({
-  //   'mousewheel': function(e) {
-  //     if (e.target.id == 'el') return;
-  //     e.preventDefault();
-  //     e.stopPropagation();
-  //   }
-  // });
+  $('body').on({
+    'mousewheel': function(e) {
+      if (e.target.id == 'el') return;
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  });
 
   $('#item').css({
     transform: `translate(${window.anchor.x}px, ${window.anchor.y}px)`,
@@ -85,9 +85,7 @@ $(document).ready(function() {
 
       // call this function on every dragmove event
       onmove: dragMoveListener,
-    });
-
-    interact('.scalable')
+    })
     .gesturable({
       onstart: function(event) {
         clearTimeout(window.resetTimeout);
@@ -96,9 +94,9 @@ $(document).ready(function() {
       onmove: function(event) {
         scale = scale * (1 + event.ds);
 
-        scaleElement.style.webkitTransform =
-          scaleElement.style.transform =
-          'scale(' + scale + ')';
+        // scaleElement.style.webkitTransform =
+        //   scaleElement.style.transform =
+        //   'scale(' + scale + ')';
 
         gestureArea.style.webkitTransform =
           gestureArea.style.transform =
@@ -107,16 +105,16 @@ $(document).ready(function() {
         dragMoveListener(event);
       },
       onend: function(event) {
-        window.resetTimeout = setTimeout(reset, 1000);
+        window.resetTimeout = setTimeout(reset, 100000);
         scaleElement.classList.add('reset');
       }
     });
 
   function reset() {
     scale = 1;
-    // scaleElement.style.webkitTransform =
-    //   scaleElement.style.transform =
-    //   'scale(1)';
+    scaleElement.style.webkitTransform =
+      scaleElement.style.transform =
+      'scale(1)';
   }
 
   function dragMoveListener(event) {
