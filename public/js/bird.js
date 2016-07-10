@@ -14,6 +14,17 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
+$(document).ready(function () {
+   console.log(window.anchor);
+   $('#gamecontainer').css({
+      left: window.anchor.x,
+      top: window.anchor.y,
+      width: window.global_width,
+      height: window.global_height,
+   });
+   // $('#flyarea').css()
+});
+
 
 var debugmode = false;
 
@@ -275,11 +286,11 @@ window.socket.on('bird_flap', function (data) {
 
 function screenClick(fromSocket)
 {
+   if (!fromSocket) {
+        window.socket.emit('bird_flap', {});
+   }
    if(currentstate == states.GameScreen)
    {
-      if (!fromSocket) {
-        window.socket.emit('bird_flap', {});
-      }
       playerJump();
    }
    else if(currentstate == states.SplashScreen)

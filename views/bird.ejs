@@ -64,6 +64,13 @@
       <div class="boundingbox" id="playerbox"></div>
       <div class="boundingbox" id="pipebox"></div>
       
+      <script type="text/javascript">
+        window.phone_id = `<%- phone_id %>`;
+        window.session_id = `<%- session_id %>`;
+        window.anchor = <%- JSON.stringify(anchor) %>
+        window.global_width = `<%= global_width %>`;
+        window.global_height = `<%= global_height %>`;
+      </script>
       <script src="/js/bird.js"></script>
    </body>
 </html>
