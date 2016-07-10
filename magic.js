@@ -33,4 +33,26 @@ io.on('connection', function(socket) {
       socket.broadcast.emit('item_draw', responseObj);
     });
   });
+
+  socket.on('video_ready', function (data) {
+    var deviceID = data.phone_id;
+      var sessionID = data.session_id;
+      client.get('session-' + sessionID, function (err, result) {
+        var session = JSON.parse(result);
+        session['devices'][deviceID]['youtubeClientLoaded'] = 'true';
+        client.set('session-' + sessionID, JSON.stringify(session), function (err, newResult) {
+          var newSession = JSON.parse(newResult);
+          // Check to see if everyone else has completed
+          var allClientsFinished = true;
+          Object.keys(session['devices']).forEach(function (device) {
+            if (!session['devices'][device].hasOwnProperty('youtubeClientLoaded')) {
+              allClientsFinished = false;
+            }
+          });
+          if (allClientsFinished) {
+            socket.broadcast.emit('item_draw', responseObj);
+          }
+      });
+    });
+  });
 });
