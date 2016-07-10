@@ -25,6 +25,12 @@ $(document).ready(function() {
     }
   });
 
+  $(window).on("orientationchange", function(data) {
+    window.socket.emit('flip', {
+      orientation: data.orientation
+    })
+  });
+
   // ----------------------------- SOCKET ----------------------------------
   window.socket = io();
   // -----------------------------------------------------------------------

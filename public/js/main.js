@@ -31,6 +31,12 @@ $(document).ready(function() {
     '-ms-transform': `translate(${window.anchor.x}px, ${window.anchor.y}px)`
   });
 
+  $(window).on("orientationchange", function(data) {
+    window.socket.emit('flip', {
+      orientation: data.orientation
+    })
+  });
+
   // add focus to the item
   var item = $('#item');
   item.data('x', window.anchor.x);
