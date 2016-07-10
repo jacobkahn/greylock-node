@@ -43,8 +43,8 @@ $(document).ready(function() {
     console.log(anchor);
     $('#item').css({
       display: 'block',
-      top: anchor.y,
-      left: anchor.x
+      position: absolute,
+      transform: `(${anchor.x}px, ${anchor.y}px)`
     });
     $('.info').text('Locally anchored at ' + anchor.x + ', ' + anchor.y);
   });
