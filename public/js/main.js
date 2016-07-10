@@ -97,10 +97,10 @@ $(document).ready(function() {
     target.setAttribute('data-x', x);
     target.setAttribute('data-y', y);
 
-    console.log($('#item').data('x'));
-    if (!$('#item').data('x')) {
+    if (!window.JacobSucks) {
       $('#item').data('x', x);
       $('#item').data('y', y);
+      window.JacobSucks = true;
     }
 
 
