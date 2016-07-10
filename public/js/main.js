@@ -68,7 +68,7 @@ $(document).ready(function() {
     });
     $('#picture').css({
       width: (data.width - 20) + 'px',
-      height: (data.height -20) + 'px' 
+      height: (data.height - 20) + 'px'
     })
   });
 
@@ -124,6 +124,16 @@ $(document).ready(function() {
       // translate when resizing from top or left edges
       x += event.deltaRect.left;
       y += event.deltaRect.top;
+      if (event.deltaRect.left || event.deltaRect.top) {
+        window.socket.emit('item_move', {
+          anchor: {
+            x: $('#item').data('x'),
+            y: $('#item').data('y'),
+          },
+          session_id: window.session_id,
+          phone_id: window.phone_id,
+        });
+      }
 
       target.style.webkitTransform = target.style.transform =
         'translate(' + x + 'px,' + y + 'px)';
