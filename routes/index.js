@@ -13,6 +13,10 @@ router.get('/page/:session_id/:phone_id', function(req, res, next) {
     var positioning = utils.calculateGlobalOffsetFromInitialAnchor(0, 0, session, phoneID);
     var globalHorizontalOffset = positioning['globalHorizontalOffset'] * -1;
     var globalVerticalOffset = positioning['globalVerticalOffset'] * -1;
+    var orientation = 'null';
+    if (session['devices'][phoneID].hasOwnProperty('orientation')) {
+      orientation = session['devices'][phoneID]['orientation'];
+    }
 
     res.render('index', {
       title: 'images',
@@ -22,6 +26,7 @@ router.get('/page/:session_id/:phone_id', function(req, res, next) {
         x: globalHorizontalOffset,
         y: globalVerticalOffset,
       },
+      orientation: orientation,
     });
   });
 });

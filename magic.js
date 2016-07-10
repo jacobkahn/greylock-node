@@ -83,17 +83,14 @@ io.on('connection', function(socket) {
     var sessionID = data.session_id;
     var deviceID = data.phone_id;
     var orientation = data.orientation;
-    // if (orientation === 'landscape') {
-
-    // } else if (orientation == 'portrait') {
-
-    // }
     client.get('session-' + sessionID, function (err, result) {
       var session = JSON.parse(result);
       var sHeight = session['devices'][deviceID]['screenHeight'];
       session['devices'][deviceID]['screenHeight'] = session['devices'][deviceID]['screenWidth'];
       session['devices'][deviceID]['screenWidth'] = sHeight;
+      session['devices'][deviceID]['orientation'] = orientation;
       session = utils.calculateGlobalOffsets(session);
+      console.log('writing flip value', JSON.stringify(session));
       client.set('session-' + sessionID, JSON.stringify(session), function (err, newResult) {
         io.sockets.emit('reload', {
           reload: 'true'
