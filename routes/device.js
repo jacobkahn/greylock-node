@@ -158,7 +158,7 @@ router.post('/calibrate', function (req, res, next) {
       session = calculateGlobalOffsets(session);
     }
     client.set('session-' + sessionID, JSON.stringify(session), function (err, result) {
-      console.log('creating session with data', session);
+      console.log('creating session with data', JSON.stringify(session));
       res.send({
         count: session.count,
         status: 'success',
