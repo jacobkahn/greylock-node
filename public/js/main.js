@@ -97,11 +97,8 @@ $(document).ready(function() {
     target.setAttribute('data-x', x);
     target.setAttribute('data-y', y);
 
-    if (!window.JacobSucks) {
-      $('#item').data('x', x);
-      $('#item').data('y', y);
-      window.JacobSucks = true;
-    }
+    $('#item').data('x', x);
+    $('#item').data('y', y);
 
 
     // ------------------ render diagnostic information ------------------
