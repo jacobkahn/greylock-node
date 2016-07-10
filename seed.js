@@ -62,12 +62,12 @@ var seedData = {
 	],
 }
 
-var sessionID = 2;
+var sessionID = "2";
 
 console.log('Now putting this into the \"db\":');
 console.log(JSON.stringify(seedData));
 
-client.set(sessionID, JSON.stringify(seedData), function (err, result) {
+client.set('session-' + sessionID, JSON.stringify(seedData), function (err, result) {
 	if (err) {
 		console.log(err);
 	}
