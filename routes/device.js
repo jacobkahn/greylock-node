@@ -101,6 +101,49 @@ var generatePhonePointers = function (session) {
       left: sortedDeviceIDs[2],
       up: sortedDeviceIDs[1],
     };
+  } else if (Number(session['count']) === 9) {
+    session['devices'][sortedDeviceIDs[0]]['neighbors'] = {
+      right: sortedDeviceIDs[1],
+      down: sortedDeviceIDs[3],
+    };
+    session['devices'][sortedDeviceIDs[1]]['neighbors'] = {
+      left: sortedDeviceIDs[0],
+      down: sortedDeviceIDs[4],
+      right: sortedDeviceIDs[2],
+    };
+    session['devices'][sortedDeviceIDs[2]]['neighbors'] = {
+      left: sortedDeviceIDs[1],
+      down: sortedDeviceIDs[5],
+    };
+    session['devices'][sortedDeviceIDs[3]]['neighbors'] = {
+      right: sortedDeviceIDs[4],
+      up: sortedDeviceIDs[0],
+      down: sortedDeviceIDs[6],
+    };
+    session['devices'][sortedDeviceIDs[4]]['neighbors'] = {
+      right: sortedDeviceIDs[5],
+      up: sortedDeviceIDs[1],
+      down: sortedDeviceIDs[7],
+      left: sortedDeviceIDs[3]
+    };
+    session['devices'][sortedDeviceIDs[5]]['neighbors'] = {
+      left: sortedDeviceIDs[4],
+      up: sortedDeviceIDs[2],
+      down: sortedDeviceIDs[8],
+    };
+    session['devices'][sortedDeviceIDs[6]]['neighbors'] = {
+      right: sortedDeviceIDs[7],
+      up: sortedDeviceIDs[3],
+    };
+    session['devices'][sortedDeviceIDs[7]]['neighbors'] = {
+      right: sortedDeviceIDs[8],
+      up: sortedDeviceIDs[4],
+      left: sortedDeviceIDs[6],
+    };
+    session['devices'][sortedDeviceIDs[8]]['neighbors'] = {
+      left: sortedDeviceIDs[7],
+      up: sortedDeviceIDs[5],
+    };
   }
   return session;
 };
