@@ -11,7 +11,7 @@ module.exports = {
     var phoneRight = session['devices'][firstPhoneID]['neighbors']['right'];
     while (phoneRight) {
       globalHorizontalOffset += Number(session['devices'][phoneRight]['screenWidth']);
-      phoneRight = session['devices'][phoneRight]['neighbors']['down'];
+      phoneRight = session['devices'][phoneRight]['neighbors']['right'];
     }
     return {
       horizontal: globalHorizontalOffset,
