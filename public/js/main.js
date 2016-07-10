@@ -61,7 +61,7 @@ $(document).ready(function() {
     // $('.info').text('Locally anchored at ' + anchor.x + ', ' + anchor.y);
   });
 
-  window.socket.on('image_resize', function(data) {
+  window.socket.on('resize_image', function(data) {
     $('#item').css({
       width: data.width + 'px',
       height: data.height + 'px',
