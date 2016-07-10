@@ -101,6 +101,17 @@ var generatePhonePointers = function (session) {
       left: sortedDeviceIDs[2],
       up: sortedDeviceIDs[1],
     };
+  } else if (Number(session['count']) === 3) {
+    session['devices'][sortedDeviceIDs[0]]['neighbors'] = {
+      right: sortedDeviceIDs[1],
+    };
+    session['devices'][sortedDeviceIDs[1]['neighbors'] = {
+      right: sortedDeviceIDs[2],
+      left: sortedDeviceIDs[0],
+    };
+    session['devices'][sortedDeviceIDs[2]]['neighbors'] = {
+      left: sortedDeviceIDs[1],
+    };
   } else if (Number(session['count']) === 9) {
     session['devices'][sortedDeviceIDs[0]]['neighbors'] = {
       right: sortedDeviceIDs[1],
