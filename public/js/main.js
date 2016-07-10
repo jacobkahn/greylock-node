@@ -40,11 +40,15 @@ $(document).ready(function() {
   window.socket.on('item_draw', function(data) {
     // TODO: change this to filter only information relevant to this client
     var anchor = data[window.phone_id].anchor;
-    console.log(anchor);
     $('#item').css({
       display: 'block',
-      transform: `(${anchor.x}px, ${anchor.y}px)`
+      transform: `translate(${anchor.x}px, ${anchor.y}px)`,
+      '-webkit-transform': `translate(${anchor.x}px, ${anchor.y}px)`,
+      '-ms-transform': `translate(${anchor.x}px, ${anchor.y}px)`
     });
+    $('#item').data('x', anchor.x);
+    $('#item').data('y', anchor.y);
+    console.log($('#item').data())
     $('.info').text('Locally anchored at ' + anchor.x + ', ' + anchor.y);
   });
 
@@ -86,6 +90,9 @@ $(document).ready(function() {
     target.setAttribute('data-x', x);
     target.setAttribute('data-y', y);
 
+    $('#item').data('x', x);
+    $('#item').data('y', y);
+
     // ------------------ render diagnostic information ------------------
 
     var textEl = event.target.querySelector('p');
@@ -98,12 +105,11 @@ $(document).ready(function() {
 
     textEl && (textEl.textContent = 'Locally anchored at ' + item.left + ', ' + item.top)
 
-    console.log(window.session_id, window.phone_id);
-
+    console.log($('#item').data());
     window.socket.emit('item_move', {
       anchor: {
-        x: item.left,
-        y: item.top,
+        x: $('#item').data('x'),
+        y: $('#item').data('y'),
       },
       session_id: window.session_id,
       phone_id: window.phone_id,
