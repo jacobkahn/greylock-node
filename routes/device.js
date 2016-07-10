@@ -65,7 +65,7 @@ var generateSortedDeviceIDs = function (session) {
   deviceIDs.sort(function (a, b) {
     aDate = moment(session['devices'][a]['calibrationTimestamp'], 'x');
     bDate = moment(session['devices'][b]['calibrationTimestamp'], 'x');
-    return aDate.isAfter(bDate) ? -1 : 1;
+    return aDate.isAfter(bDate) ? 1 : -1;
   });
   return deviceIDs;
 };
