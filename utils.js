@@ -62,17 +62,17 @@ function phoneToGlobal(pointx, pointy, phone) {
 
 }
 
-function calculateGlobalOffsetFromInitialAnchor(x, y, session) {
-	var globalVerticalOffset = Number(data.anchor.y);
-	var globalHorizontalOffset = Number(data.anchor.x);
+function calculateGlobalOffsetFromInitialAnchor(x, y, session, phoneID) {
+	var globalVerticalOffset = y;
+	var globalHorizontalOffset = x;
 	console.log('Moving from, before calcs ', globalHorizontalOffset, globalVerticalOffset);
-	var phoneAbove = session['devices'][data.phone_id]['neighbors']['up'];
+	var phoneAbove = session['devices'][phoneID]['neighbors']['up'];
 	while (phoneAbove) {
 	  globalVerticalOffset += Number(session['devices'][phoneAbove]['screenHeight']);
 	  phoneAbove = session['devices'][phoneAbove]['neighbors']['up'];
 	}
-	var phoneLeft = session['devices'][data.phone_id]['neighbors']['left'];
-	console.log(data.phone_id, '\n', JSON.stringify(session['devices'][data.phone_id]));
+	var phoneLeft = session['devices'][phoneID]['neighbors']['left'];
+	console.log(phoneID, '\n', JSON.stringify(session['devices'][phoneID]));
 	console.log(phoneLeft);
 	while (phoneLeft) {
 	  console.log('found a phone to the left with offset called ', phoneLeft, Number(session['devices'][phoneLeft]['screenWidth']));
