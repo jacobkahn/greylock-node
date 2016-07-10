@@ -123,7 +123,7 @@ router.post('/calibrate/ready', function (req, res, next) {
   client.get('session-' + sessionID, function (err, result) {
     var session = JSON.parse(result);
     res.send({
-    	calibration_ready: String(getNumberCalibrated(session) === Number(session['count']),)
+    	calibration_ready: String(getNumberCalibrated(session) === Number(session['count'])),
     	status: 'success',
     });
   });
