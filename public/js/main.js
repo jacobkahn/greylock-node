@@ -47,7 +47,7 @@ $(document).ready(function() {
   window.socket.on('item_draw', function(data) {
     // TODO: change this to filter only information relevant to this client
     var anchor = data[window.phone_id].anchor;
-    console.log(anchor);
+    consoe.log(JSON.stringify(anchor));
     $('#item').css({
       display: 'block',
       transform: `translate(${anchor.x}px, ${anchor.y}px)`,
@@ -114,8 +114,6 @@ $(document).ready(function() {
     var item = interact.getElementRect(event.target);
 
     textEl && (textEl.textContent = 'Locally anchored at ' + item.left + ', ' + item.top)
-
-    console.log(x, y, $('#item').data());
 
     window.socket.emit('item_move', {
       anchor: {
