@@ -455,7 +455,7 @@ function updatePipes()
    //add a new pipe (top height + bottom height  + pipeheight == flyArea) and put it in our tracker
    var padding = 80;
    var constraint = flyArea - pipeheight - (padding * 2); //double padding (for top and bottom)
-   var topheight = Math.floor((pipes[pipeIndex % 10]*constraint) + padding); //add lower padding
+   var topheight = Math.floor((pipeSeed[pipeIndex % 10]*constraint) + padding); //add lower padding
    pipeIndex += 1;
    var bottomheight = (flyArea - pipeheight) - topheight;
    var newpipe = $('<div class="pipe animated"><div class="pipe_upper" style="height: ' + topheight + 'px;"></div><div class="pipe_lower" style="height: ' + bottomheight + 'px;"></div></div>');
