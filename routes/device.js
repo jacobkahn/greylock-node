@@ -82,7 +82,7 @@ var generatePhonePointers = function (session) {
       left: sortedDeviceIDs[0],
     };
   } else if (Number(session['count']) === 4) {
-  	
+
   }
   return session;
 };
@@ -138,6 +138,7 @@ router.post('/calibrate', function (req, res, next) {
       session = calculateGlobalOffsets(session);
     }
     client.set('session-' + sessionID, JSON.stringify(session), function (err, result) {
+      console.log('creating session with data', session);
       res.send({
         count: session.count,
         status: 'success',
