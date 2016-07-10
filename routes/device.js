@@ -1,6 +1,7 @@
 var express = require('express');
 var hat = require('hat');
 var client = require('../db/db');
+var moment = require('moment');
 
 var router = express.Router();
 
@@ -17,13 +18,18 @@ router.post('/create_session', function (req, res, next) {
   var deviceCount = req.body.count;
 
   client.get('session_counter', function (err, count) {
-    var sessionID = count + 1;
+    var sessionID = Number(count) + 1;
 
-    var sessionData = {
+    var session = {
       count: deviceCount,
-      devices: [deviceID],
+      devices: {
+        [deviceID]: {
+          deviceID: deviceID,
+          neighbors: {},
+        },
+      },
     };
-    client.set('session-' + sessionID, JSON.stringify(sessionData), function (err, result) {
+    client.set('session-' + sessionID, JSON.stringify(session), function (err, result) {
       client.set('session_counter', sessionID, function (err, result) {
         res.send({
           session_id: sessionID,
@@ -41,7 +47,10 @@ router.post('/register_session', function (req, res, next) {
 
   client.get('session-' + sessionID, function (err, result) {
     var session = JSON.parse(result);
-    session['devices'].push(deviceID);
+    session['devices'][deviceID] = {
+      deviceID: deviceID,
+      neighbors: {},
+    };
     client.set('session-' + sessionID, JSON.stringify(session), function (err, result) {
       res.send({
         count: session.count,
@@ -51,27 +60,71 @@ router.post('/register_session', function (req, res, next) {
   });
 });
 
-// router.post('/calibrate', function (req, res, next) {
-//   var sessionID = req.body.session_id;
-//   var deviceID = req.body.phone_id;
-//   var timestamp = req.body.timestamp;
+var generateSortedDeviceIDs = function (session) {
+  var deviceIDs = Object.keys(session['devices']);
+  deviceIDs.sort(function (a, b) {
+    aDate = moment(session['devices'][a]['calibrationTimestamp'], 'x');
+    bDate = moment(session['devices'][b]['calibrationTimestamp'], 'x');
+    return aDate.isAfter(bDate) ? -1 : 1;
+  });
+  return deviceIDs;
+};
 
-//   client.get('session-' + sessionID, function (err, result) {
-//     var session = JSON.parse(result);
-//     // two phone configuration first
-//     if (session['devices'].length === 0) {
-//       session['calibrationData'] = [];
-//       session['calibrationData'].push({
-//         timestamp: 
-//       });
-//     }
-//     client.set('session-' + sessionID, JSON.stringify(session), function (err, result) {
-//       res.send({
-//         count: session.count,
-//         status: 'success',
-//       });
+var generatePhonePointers = function (session) {
+  var sortedDeviceIDs = generateSortedDeviceIDs(session);
+  if (Number(session['count']) === 2) {
+    session['devices'][sortedDeviceIDs[0]]['neighbors'] = {
+      right: sortedDeviceIDs[1],
+    };
+    session['devices'][sortedDeviceIDs[1]]['neighbors'] = {
+      left: sortedDeviceIDs[0],
+    };
+  }
+  return session;
+};
 
-//   });
-// });
+var getNumberCalibrated = function (session) {
+	var numberCalibrated = 0;
+    Object.keys(session['devices']).forEach(function (key) {
+      if (session['devices'][key].hasOwnProperty('calibrationTimestamp')) {
+        numberCalibrated++;
+      }
+    });
+	return numberCalibrated;
+}
+
+router.post('/calibrate', function (req, res, next) {
+  var sessionID = req.body.session_id;
+  var deviceID = req.body.phone_id;
+  var calibrationTimestamp = req.body.timestamp;
+
+  client.get('session-' + sessionID, function (err, result) {
+    var session = JSON.parse(result);
+    session['devices'][deviceID]['calibrationTimestamp'] = calibrationTimestamp;
+
+    var numberCalibrated = getNumberCalibrated(session);
+    if (numberCalibrated === Number(session['count'])) {
+      session = generatePhonePointers(session);
+    }
+    client.set('session-' + sessionID, JSON.stringify(session), function (err, result) {
+      res.send({
+        count: session.count,
+        status: 'success',
+      });
+    });
+  });
+});
+
+router.post('/calibrate/ready', function (req, res, next) {
+  var sessionID = req.body.session_id;
+
+  client.get('session-' + sessionID, function (err, result) {
+    var session = JSON.parse(result);
+    res.send({
+    	calibration_ready: getNumberCalibrated(session) === Number(session['count']),
+    	status: 'success',
+    });
+  });
+});
 
 module.exports = router;
