@@ -18,6 +18,7 @@ io.on('connection', function(socket) {
     var sessionID = data.session_id;
     client.get('session-' + sessionID, function (err, result) {
       var session = JSON.parse(result);
+      console.log(data.anchor);
 
       var positioning = utils.calculateGlobalOffsetFromInitialAnchor(Number(data.anchor.x), Number(data.anchor.y), session, data.phone_id);
       var globalHorizontalOffset = positioning['globalHorizontalOffset'];

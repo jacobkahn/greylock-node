@@ -62,7 +62,7 @@ function phoneToGlobal(pointx, pointy, phone) {
 
 }
 
-function calculateGlobalOffsetFromInitialAnchor(x, y, session, phoneID) {
+var calculateGlobalOffsetFromInitialAnchor = function (x, y, session, phoneID) {
 	var globalVerticalOffset = y;
 	var globalHorizontalOffset = x;
 	console.log('Moving from, before calcs ', globalHorizontalOffset, globalVerticalOffset);
@@ -79,7 +79,7 @@ function calculateGlobalOffsetFromInitialAnchor(x, y, session, phoneID) {
 	  globalHorizontalOffset += Number(session['devices'][phoneLeft]['screenWidth']);
 	  phoneLeft = session['devices'][phoneLeft]['neighbors']['left'];
 	}
-	return {globalVerticalOffset : globalVerticalOffset, globalHorizontalOffset: globalHorizontalOffset};
+	return {globalVerticalOffset: globalVerticalOffset, globalHorizontalOffset: globalHorizontalOffset};
 }
 
 function globalToPhone(pointx, pointy, phone) {
