@@ -1,139 +1,37 @@
-function getSubImage (anchorx, anchory, image_sizex, image_sizey, phone_sizex, phone_sizey) {
-	if (anchory >= phone_sizey || anchorx >= phone_sizex) {
-		return null;
-	} else if (anchorx < -image_sizex || anchory < -image_sizey) {
-		return null;
-	} else {
-		// part of the image is in this phone's display space
-		var top = Math.abs(Math.min(0, anchory));
-		var left = Math.abs(Math.min(0, anchorx));
-		if (anchory + image_sizey < phone_sizey) {
-			var bottom = image_sizey;
-		} else {
-			var bottom = phone_sizey - anchory;
-		}
-		if (anchorx + image_sizex < phone_sizex) {
-			var right = image_sizex;
-		} else {
-			var right = phone_sizex - anchorx;
-		}
-		// top left, top right, bottom left, bottom right image coordinates to display
-		return [[left, top], [right, top], [left, bottom], [right, bottom]];
-	}
-}
+module.exports = {
+  calculateGlobalCanvasDimensions: function (session) {
+    var firstPhoneID = session['sortedDeviceIDs'][0];
+    var globalVerticalOffset = session['devices'][firstPhoneID]['screenHeight'];
+    var globalHorizontalOffset = session['devices'][firstPhoneID]['screenWidth'];
+    var phoneBelow = session['devices'][firstPhoneID]['neighbors']['down'];
+    while (phoneBelow) {
+      globalVerticalOffset += Number(session['devices'][phoneBelow]['screenHeight']);
+      phoneBelow = session['devices'][phoneBelow]['neighbors']['down'];
+    }
+    var phoneRight = session['devices'][firstPhoneID]['neighbors']['right'];
+    while (phoneRight) {
+      globalHorizontalOffset += Number(session['devices'][phoneRight]['screenWidth']);
+      phoneRight = session['devices'][phoneRight]['neighbors']['down'];
+    }
+    return {
+      horizontal: globalHorizontalOffset,
+      vertical: globalVerticalOffset,
+    };
+  },
 
-
-function getSubPhoneDisplay (anchorx, anchory, image_sizex, image_sizey, phone_sizex, phone_sizey) {
-	var subimage = getSubImage(anchorx, anchory, image_sizex, image_sizey, phone_sizex, phone_sizey);
-	if (subimage == null) {
-		return null;
-	} else {
-		// part of the image is in this phone's display space
-		var phone_top = Math.abs(Math.max(0, anchory));
-		var phone_left = Math.abs(Math.max(0, anchorx));
-		// top left, top right, bottom left, bottom right image coordinates to display
-		var top_left = [phone_left, phone_top];
-		var dx = subimage[1][0] - subimage[0][0];
-		var top_right = [phone_left + dx, phone_top];
-		var dy = subimage[2][1] - subimage[0][1];
-		var bot_right = [phone_left + dx, phone_top + dy];
-		var bot_left = [phone_left, phone_top + dy];
-		return [top_left, top_right, bot_left, bot_right];
-	}
-}
-
-function getAnchorDisplacement (anchorx, anchory, lst) {
-	/**
-	Takes in the current global coordinates of anchor and a list of phones, and outputs the position of the phone relative to the anchor
-	*/
-	var newlst = [];
-	for (var j = 0; j < lst.length; j++){
-  		curphone = lst[j];
-  		newlst.push(globalToPhone(anchorx, anchory, curphone));
-	}
-	return newlst;
-}
-
-function phoneToGlobal(pointx, pointy, phone) {
-	/**
-	Takes in a point in a phone's coordinate frame, and transforms it into global frame.
-	*/
-	return [pointx + phone["corner"]["x"], pointy + phone["corner"]["y"]];
-
-}
-
-var calculateGlobalOffsetFromInitialAnchor = function (x, y, session, phoneID) {
-	var globalVerticalOffset = y;
-	var globalHorizontalOffset = x;
-	var phoneAbove = session['devices'][phoneID]['neighbors']['up'];
-	while (phoneAbove) {
-	  globalVerticalOffset += Number(session['devices'][phoneAbove]['screenHeight']);
-	  phoneAbove = session['devices'][phoneAbove]['neighbors']['up'];
-	}
-	var phoneLeft = session['devices'][phoneID]['neighbors']['left'];
-	while (phoneLeft) {
-	  globalHorizontalOffset += Number(session['devices'][phoneLeft]['screenWidth']);
-	  phoneLeft = session['devices'][phoneLeft]['neighbors']['left'];
-	}
-	return {globalVerticalOffset: globalVerticalOffset, globalHorizontalOffset: globalHorizontalOffset};
-}
-
-function globalToPhone(pointx, pointy, phone) {
-	/**
-	Takes in a point in global frame, and transforms it into a phone's frame.
-	*/
-	return [pointx - phone["corner"]["x"], pointy - phone["corner"]["y"]];
-}
-
-function translateGlobal(translationx, translationy, phonelst) {
-	/** 
-	Translates the global frame itself (equivalent to scrolling). Note: anchor point also needs to be translated separately.
-	*/
-	var newlst = [];
-	for (var j = 0; j < phonelst.length; j++){
-  		phone = phonelst[j];
-  		newpt = [phone["corner"]["x"], phone["corner"]["y"]];
-  		newpt[0] += translationx;
-  		newpt[1] += translationy;
-  		newlst.push(newpt);
-	}
-	return newlst;
-}
-
-function translate(translatex, translatey, pointx, pointy) {
-	/**
-	Translates a point.
-	*/
-	return [translatex + pointx, translatey + pointy];
-}
-
-function scale(factor, centerx, centery, pointx, pointy) {
-	/** 
-	Zoom helper function.
-	*/
-	return [(pointx - centerx) * factor + centerx, (pointy - centery) * factor + centery];
-}
-
-function rotate(theta, centerx, centery, pointx, pointy) {
-	/**
-	Rotates a vector from center to point around center clockwise by theta (in degrees).
-	*/
-	dx = pointx - centerx
-	dy = pointy - centery
-	rad = theta * Math.PI / 180.0
-	sine = Math.sin(rad)
-	cosine = Math.cos(rad)
-	return [dx * cosine - dy * sine + centerx, dx * sine + dy * cosine + centery]
-}
-
-// random test code
-anchorx = 1000
-anchory = 1000
-image_sizex = 1920
-image_sizey = 1080
-phone_sizex = 1920
-phone_sizey = 1080
-
-
-
-module.exports = {calculateGlobalOffsetFromInitialAnchor: calculateGlobalOffsetFromInitialAnchor};
+  calculateGlobalOffsetFromInitialAnchor: function (x, y, session, phoneID) {
+    var globalVerticalOffset = y;
+    var globalHorizontalOffset = x;
+    var phoneAbove = session['devices'][phoneID]['neighbors']['up'];
+    while (phoneAbove) {
+      globalVerticalOffset += Number(session['devices'][phoneAbove]['screenHeight']);
+      phoneAbove = session['devices'][phoneAbove]['neighbors']['up'];
+    }
+    var phoneLeft = session['devices'][phoneID]['neighbors']['left'];
+    while (phoneLeft) {
+      globalHorizontalOffset += Number(session['devices'][phoneLeft]['screenWidth']);
+      phoneLeft = session['devices'][phoneLeft]['neighbors']['left'];
+    }
+    return {globalVerticalOffset: globalVerticalOffset, globalHorizontalOffset: globalHorizontalOffset};
+  },
+};

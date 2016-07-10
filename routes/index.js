@@ -37,6 +37,8 @@ router.get('/youtube/:session_id/:phone_id', function(req, res, next) {
     var globalHorizontalOffset = positioning['globalHorizontalOffset'] * -1;
     var globalVerticalOffset = positioning['globalVerticalOffset'] * -1;
 
+    var globalCanvasDimensions = utils.calculateGlobalCanvasDimensions(session);
+
     res.render('youtube', {
       title: 'youtube',
       phone_id: phoneID,
@@ -45,8 +47,8 @@ router.get('/youtube/:session_id/:phone_id', function(req, res, next) {
         x: globalHorizontalOffset,
         y: globalVerticalOffset,
       },
-      // global_width: FILL THIS IN
-      // global_height: FILL THIS IN
+      global_width: globalCanvasDimensions['horizontal'],
+      global_height: globalCanvasDimensions['vertical']
     });
   });
 });
