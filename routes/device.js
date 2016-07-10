@@ -105,7 +105,7 @@ var generatePhonePointers = function (session) {
     session['devices'][sortedDeviceIDs[0]]['neighbors'] = {
       right: sortedDeviceIDs[1],
     };
-    session['devices'][sortedDeviceIDs[1]['neighbors'] = {
+    session['devices'][sortedDeviceIDs[1]]['neighbors'] = {
       right: sortedDeviceIDs[2],
       left: sortedDeviceIDs[0],
     };
