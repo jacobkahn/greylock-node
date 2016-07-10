@@ -44,7 +44,7 @@ io.on('connection', function(socket) {
         // Check to see if everyone else has completed
         var allClientsFinished = true;
         Object.keys(session['devices']).forEach(function (device) {
-          if (!session['devices'][device].hasOwnProperty('youtubeClientLoaded')) {
+          if (session['devices'][device]['youtubeClientLoaded'] != 'true') {
             allClientsFinished = false;
           }
         });
@@ -53,6 +53,14 @@ io.on('connection', function(socket) {
         }
       });
     });
+  });
+
+  socket.on('video_pause', function (data) {
+    socket.broadcast.emit('video_pause', {});
+  });
+
+  socket.on('video_play', function (data) {
+    socket.broadcast.emit('video_play', {});
   });
 
   socket.on('video_buffering', function (data) {
