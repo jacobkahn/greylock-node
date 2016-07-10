@@ -25,7 +25,6 @@ a {
 }
 
 .item {
-    padding: 10px;
     position: absolute;
     width: 250px;
     height: 250px;
@@ -35,9 +34,10 @@ a {
 }
 
 img {
+    padding: 10px;
     height: auto;
-    max-width: 230px;
-    max-height: 230px;
+    width: 230px;
+    height: 230px;
     border-radius: 50%;
     opacity: 0.9;
 }
