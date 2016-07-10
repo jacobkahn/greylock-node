@@ -16,11 +16,13 @@ router.get('/initialize', function (req, res, next) {
 router.post('/create_session', function (req, res, next) {
   var deviceID = req.body.phone_id;
   var deviceCount = req.body.count;
+  var widget = req.body.widget;
 
   client.get('session_counter', function (err, count) {
     var sessionID = Number(count) + 1;
 
     var session = {
+      widget: widget,
       count: deviceCount,
       devices: {
         [deviceID]: {
@@ -54,6 +56,7 @@ router.post('/register_session', function (req, res, next) {
     client.set('session-' + sessionID, JSON.stringify(session), function (err, result) {
       res.send({
         session_id: sessionID,
+        widget: session['widget'],
         status: 'success',
       });
     });
