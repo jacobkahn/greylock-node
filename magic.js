@@ -36,22 +36,30 @@ io.on('connection', function(socket) {
 
   socket.on('video_ready', function (data) {
     var deviceID = data.phone_id;
-      var sessionID = data.session_id;
-      client.get('session-' + sessionID, function (err, result) {
-        var session = JSON.parse(result);
-        session['devices'][deviceID]['youtubeClientLoaded'] = 'true';
-        client.set('session-' + sessionID, JSON.stringify(session), function (err, newResult) {
-          // Check to see if everyone else has completed
-          var allClientsFinished = true;
-          Object.keys(session['devices']).forEach(function (device) {
-            if (!session['devices'][device].hasOwnProperty('youtubeClientLoaded')) {
-              allClientsFinished = false;
-            }
-          });
-          if (allClientsFinished) {
-            io.sockets.emit('play_video', {});
+    var sessionID = data.session_id;
+    client.get('session-' + sessionID, function (err, result) {
+      var session = JSON.parse(result);
+      session['devices'][deviceID]['youtubeClientLoaded'] = 'true';
+      client.set('session-' + sessionID, JSON.stringify(session), function (err, newResult) {
+        // Check to see if everyone else has completed
+        var allClientsFinished = true;
+        Object.keys(session['devices']).forEach(function (device) {
+          if (!session['devices'][device].hasOwnProperty('youtubeClientLoaded')) {
+            allClientsFinished = false;
           }
+        });
+        if (allClientsFinished) {
+          io.sockets.emit('play_video', {});
+        }
       });
     });
+  });
+
+  socket.on('video_buffering', function (data) {
+    socket.broadcast.emit('wait_on_video', {});
+  });
+
+  socket.on('video_safe', function (data) {
+    io.sockets.emit('play_video', {});
   });
 });
