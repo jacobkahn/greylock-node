@@ -40,7 +40,7 @@ io.on('connection', function(socket) {
           }
         };
       });
-      socket.broadcast.emit('item_draw', new_data);
+      socket.broadcast.emit('item_draw', responseObj);
     });
   });
 });
