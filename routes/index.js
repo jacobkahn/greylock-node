@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var client = require('../db/db');
 
 /* GET home page. */
 router.get('/page/:session_id/:phone_id', function(req, res, next) {
