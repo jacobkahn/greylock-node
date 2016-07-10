@@ -33,7 +33,9 @@ $(document).ready(function() {
 
   $(window).on("orientationchange", function(data) {
     window.socket.emit('flip', {
-      orientation: data.orientation
+      orientation: data.orientation,
+      session_id: window.session_id,
+      phone_id: window.phone_id,
     })
   });
 

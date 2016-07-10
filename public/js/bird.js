@@ -14,7 +14,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-$(document).ready(function () {
+$(document).ready(function() {
    $('#gamecontainer').css({
       left: window.anchor.x,
       top: window.anchor.y,
@@ -26,7 +26,9 @@ $(document).ready(function () {
 
 $(window).on("orientationchange", function(data) {
    window.socket.emit('flip', {
-      orientation: data.orientation
+      orientation: data.orientation,
+      session_id: window.session_id,
+      phone_id: window.phone_id,
    })
 });
 
@@ -197,8 +199,7 @@ function gameloop() {
    }
 
    //did we hit the ground?
-   if(box.bottom >= $("#land").offset().top)
-   {
+   if (box.bottom >= $("#land").offset().top) {
       playerDead(false);
       window.deathByJS = true;
       window.isClickedByJS = true;
@@ -263,25 +264,34 @@ $(document).keydown(function(e) {
    //space bar!
    if (e.keyCode == 32) {
       //in ScoreScreen, hitting space should click the "replay" button. else it's just a regular spacebar hit
-      if(currentstate == states.ScoreScreen) {
-         window.socket.emit('bird_click', {is_replay: true});
+      if (currentstate == states.ScoreScreen) {
+         window.socket.emit('bird_click', {
+            is_replay: true
+         });
          $("#replay").click();
       } else {
-        window.socket.emit('bird_click', {is_replay: true});
-        screenClick(false);
+         window.socket.emit('bird_click', {
+            is_replay: true
+         });
+         screenClick(false);
       }
    }
 });
 
 //Handle mouse down OR touch start
-if("ontouchstart" in window)
-   $(document).on("touchstart", function () {
-      window.socket.emit('bird_click', {is_replay: false, from: 'touch'});
+if ("ontouchstart" in window)
+   $(document).on("touchstart", function() {
+      window.socket.emit('bird_click', {
+         is_replay: false,
+         from: 'touch'
+      });
       screenClick();
    });
 else
-   $(document).on("mousedown", function () {
-      window.socket.emit('bird_click', {is_replay: false});
+   $(document).on("mousedown", function() {
+      window.socket.emit('bird_click', {
+         is_replay: false
+      });
       screenClick();
    });
 
@@ -289,26 +299,22 @@ else
 window.socket = io();
 // -----------------------------------------------------------------------
 
-window.socket.on('bird_click', function (data) {
+window.socket.on('bird_click', function(data) {
    window.isClickedByJS = !data.is_replay;
    data.is_replay ? replayer() : screenClick();
 });
 
-window.socket.on('death', function () {
+window.socket.on('death', function() {
    playerDead();
    window.isClickedByJS = true;
 });
 
-function screenClick()
-{  
+function screenClick() {
 
-   if(currentstate == states.GameScreen)
-   {
+   if (currentstate == states.GameScreen) {
       playerJump();
       window.socket.emit('bird_flap', {});
-   }
-   else if(currentstate == states.SplashScreen)
-   {
+   } else if (currentstate == states.SplashScreen) {
       startGame();
    }
 }
@@ -371,8 +377,7 @@ function setMedal() {
 }
 
 
-function playerDead()
-{
+function playerDead() {
    window.isClickedByJS = true;
    if (window.deathByJS) {
       window.socket.emit('death', {});
@@ -464,7 +469,9 @@ function showScore() {
 
 function replayer() {
    if (window.isClickedByJS) {
-      window.socket.emit('bird_click', {is_replay: true});
+      window.socket.emit('bird_click', {
+         is_replay: true
+      });
       window.isClickedByJS = false;
    }
    //make sure we can only click once
