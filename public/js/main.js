@@ -102,7 +102,7 @@ $(document).ready(function() {
 
     textEl && (textEl.textContent = 'Locally anchored at ' + item.left + ', ' + item.top)
 
-    console.log(window.session_id, window.phone_id);
+    console.log($('#item').data('x'), $('#item').data('y');
 
     window.socket.emit('item_move', {
       anchor: {
