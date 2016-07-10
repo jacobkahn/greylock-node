@@ -34,6 +34,10 @@ $(document).ready(function() {
     window.player.playVideo();
   });
 
+  window.socket.on('wait_on_vidoe', function(data) {
+    window.player.pauseVideo();
+  });
+
   $('#player').css({
     left: window.anchor.x,
     top: window.anchor.y,
@@ -76,10 +80,7 @@ $(document).ready(function() {
     // event.target.playVideo();
     window.player = event.target;
     console.log('I am ready to play');
-    window.socket.emit('video_ready', {
-      session_id: window.session_id,
-      phone_id: window.phone_id,
-    });
+
   }
 
   // 5. The API calls this function when the player's state changes.
@@ -87,6 +88,19 @@ $(document).ready(function() {
   //    the player should play for six seconds and then stop.
   // var done = false;
   function onPlayerStateChange(event) {
+    var state = event.state;
+    console.log(state);
+    if (state == 3) {
+      window.buffering = true;
+    } else if (state == 1) {
+      if (window.buffering == true) {
+        window.player.pauseVideo();
+        window.socket.emit('video_ready', {
+          session_id: window.session_id,
+          phone_id: window.phone_id,
+        });
+      }
+    }
     // if (event.data == YT.PlayerState.PLAYING && !done) {
     //   setTimeout(stopVideo, 6000);
     //   done = true;
