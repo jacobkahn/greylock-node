@@ -123,5 +123,7 @@ console.log(getSubImage(anchorx, anchory, image_sizex, image_sizey, phone_sizex,
 
 
 module.exports = { utils:
-	phoneToGlobal: phoneToGlobal,
+	{ 
+		phoneToGlobal: phoneToGlobal,
+	}
 };
