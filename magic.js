@@ -73,6 +73,7 @@ io.on('connection', function(socket) {
 
   socket.on('bird_click', function (data) {
     console.log('bird_click', data.is_replay);
+    console.log('from touch?', data.from)
     socket.broadcast.emit('bird_click', {is_replay: data.is_replay});
   });
 

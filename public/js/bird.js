@@ -276,7 +276,8 @@ $(document).keydown(function(e) {
 //Handle mouse down OR touch start
 if("ontouchstart" in window)
    $(document).on("touchstart", function () {
-      window.socket.emit('bird_click', {is_replay: false});
+      window.socket.emit('bird_click', {is_replay: false, from: 'touch'});
+      screenClick();
    });
 else
    $(document).on("mousedown", function () {
