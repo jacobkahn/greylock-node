@@ -54,6 +54,8 @@ $(document).ready(function() {
       '-webkit-transform': `translate(${anchor.x}px, ${anchor.y}px)`,
       '-ms-transform': `translate(${anchor.x}px, ${anchor.y}px)`
     });
+    $('#item').data('x', anchor.x);
+    $('#item').data('y', anchor.y);
     $('.info').text('Locally anchored at ' + anchor.x + ', ' + anchor.y);
   });
 
