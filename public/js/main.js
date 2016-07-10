@@ -104,6 +104,12 @@ $(document).ready(function() {
       target.style.width = event.rect.width + 'px';
       target.style.height = event.rect.height + 'px';
 
+      var item = $('#item');
+      item.css({
+        width: event.rect.width - 20+ 'px',
+        height: event.rect.height - 20+ 'px';
+      });
+
       // translate when resizing from top or left edges
       x += event.deltaRect.left;
       y += event.deltaRect.top;
