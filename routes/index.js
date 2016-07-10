@@ -7,7 +7,7 @@ var utils = require('../utils');
 router.get('/page/:session_id/:phone_id', function(req, res, next) {
   var sessionID = req.params.session_id;
   var phoneID = req.params.phone_id;
-  client.get('session-' + sessionID, function (err, result) {
+  client.get('session-' + sessionID, function(err, result) {
     var session = JSON.parse(result);
 
     var positioning = utils.calculateGlobalOffsetFromInitialAnchor(0, 0, session, phoneID);
@@ -15,14 +15,39 @@ router.get('/page/:session_id/:phone_id', function(req, res, next) {
     var globalVerticalOffset = positioning['globalVerticalOffset'] * -1;
 
     res.render('index', {
-      title: 'Express',
+      title: 'images',
       phone_id: phoneID,
       session_id: sessionID,
       anchor: {
         x: globalHorizontalOffset,
         y: globalVerticalOffset,
       },
-	});
+    });
+  });
+});
+
+/* GET youtube page. */
+router.get('/youtube/:session_id/:phone_id', function(req, res, next) {
+  var sessionID = req.params.session_id;
+  var phoneID = req.params.phone_id;
+  client.get('session-' + sessionID, function(err, result) {
+    var session = JSON.parse(result);
+
+    var positioning = utils.calculateGlobalOffsetFromInitialAnchor(0, 0, session, phoneID);
+    var globalHorizontalOffset = positioning['globalHorizontalOffset'] * -1;
+    var globalVerticalOffset = positioning['globalVerticalOffset'] * -1;
+
+    res.render('youtube', {
+      title: 'youtube',
+      phone_id: phoneID,
+      session_id: sessionID,
+      anchor: {
+        x: globalHorizontalOffset,
+        y: globalVerticalOffset,
+      },
+      // global_width: FILL THIS IN
+      // global_height: FILL THIS IN
+    });
   });
 });
 
