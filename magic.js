@@ -1,5 +1,7 @@
 var server = require('./bin/www');
 
+var utils = require('./utils');
+
 server.listen(3000);
 
 var io = require('socket.io')(server);

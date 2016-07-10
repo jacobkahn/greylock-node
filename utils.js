@@ -121,3 +121,7 @@ phone_sizey = 1080
 console.log(getSubPhoneDisplay(anchorx, anchory, image_sizex, image_sizey, phone_sizex, phone_sizey))
 console.log(getSubImage(anchorx, anchory, image_sizex, image_sizey, phone_sizex, phone_sizey))
 
+
+module.exports = { utils:
+	phoneToGlobal: phoneToGlobal,
+};

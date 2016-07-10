@@ -53,7 +53,7 @@ router.post('/register_session', function (req, res, next) {
     };
     client.set('session-' + sessionID, JSON.stringify(session), function (err, result) {
       res.send({
-        count: session.count,
+        count: sessionID,
         status: 'success',
       });
     });
@@ -73,7 +73,7 @@ var generateSortedDeviceIDs = function (session) {
 var generatePhonePointers = function (session) {
   var sortedDeviceIDs = generateSortedDeviceIDs(session);
   if (Number(session['count']) === 1) {
-  	
+
   } else if (Number(session['count']) === 2) {
     session['devices'][sortedDeviceIDs[0]]['neighbors'] = {
       right: sortedDeviceIDs[1],
