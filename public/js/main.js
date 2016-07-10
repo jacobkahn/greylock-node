@@ -37,7 +37,7 @@ $(document).ready(function() {
   item.data('y', window.anchor.y);
   var x = item.data('x');
   var y = item.data('y');
-  $('.info').text(`Locally anchored at ${x}, ${y}`).focus();
+  // $('.info').text(`Locally anchored at ${x}, ${y}`).focus();
 
   // ----------------------------- SOCKET ----------------------------------
   window.socket = io();
@@ -58,7 +58,7 @@ $(document).ready(function() {
     $('#item').data('y', anchor.y);
     document.getElementById('item').setAttribute('data-x', anchor.x);
     document.getElementById('item').setAttribute('data-y', anchor.y);
-    $('.info').text('Locally anchored at ' + anchor.x + ', ' + anchor.y);
+    // $('.info').text('Locally anchored at ' + anchor.x + ', ' + anchor.y);
   });
 
   var ITEM_WIDTH = $('.item').css('width');
