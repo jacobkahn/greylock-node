@@ -84,7 +84,7 @@ $(document).ready(function() {
       snap: false,
 
       // call this function on every dragmove event
-      onmove: dragMoveListener,
+      // onmove: dragMoveListener,
     });
 
     interact('.scalable')
