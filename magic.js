@@ -74,4 +74,8 @@ io.on('connection', function(socket) {
   socket.on('bird_flap', function (data) {
     socket.broadcast.emit('bird_flap', {});
   });
+
+  socket.on('resize', function(data) {
+    socket.broadcast.emit('resize_image', data);
+  });
 });

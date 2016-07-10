@@ -61,6 +61,17 @@ $(document).ready(function() {
     // $('.info').text('Locally anchored at ' + anchor.x + ', ' + anchor.y);
   });
 
+  window.socket.on('image_resize', function(data) {
+    $('#item').css({
+      width: data.width + 'px',
+      height: data.height + 'px',
+    });
+    $('#picture').css({
+      width: (data.width - 20) + 'px',
+      height: (data.height -20) + 'px' 
+    })
+  });
+
   var ITEM_WIDTH = $('.item').css('width');
   var ITEM_HEIGHT = $('.item').css('height');
 
@@ -106,8 +117,8 @@ $(document).ready(function() {
 
       var item = $('#picture');
       item.css({
-        width: event.rect.width - 20+ 'px',
-        height: event.rect.height - 20+ 'px'
+        width: event.rect.width - 20 + 'px',
+        height: event.rect.height - 20 + 'px'
       });
 
       // translate when resizing from top or left edges
@@ -119,6 +130,11 @@ $(document).ready(function() {
 
       target.setAttribute('data-x', x);
       target.setAttribute('data-y', y);
+
+      window.socket.emit('resize', {
+        width: event.rect.width,
+        height: event.rect.height,
+      });
     });
 
   function dragMoveListener(event) {
