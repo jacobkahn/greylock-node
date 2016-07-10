@@ -31,11 +31,10 @@ $(document).ready(function() {
 
   window.socket.on('play_video', function(data) {
     console.log('EVERYONE IS READY!!!!!');
-    window.pausedBYJS = false;
     window.player.playVideo();
   });
 
-  window.socket.on('video_pause', function(data) {
+  window.socket.on('wait_on_vidoe', function(data) {
     window.player.pauseVideo();
   });
 
@@ -78,14 +77,12 @@ $(document).ready(function() {
 
   // 4. The API will call this function when the video player is ready.
   function onPlayerReady(event) {
-    console.log('player ready!')
     if (!window.READY) {
       // event.target.playVideo();
       window.player = event.target;
       console.log('I am ready to play');
       window.player.playVideo();
       window.READY = true;
-      window.isFirstPause = true;
     }
   }
 
@@ -97,26 +94,16 @@ $(document).ready(function() {
     var state = event.data;
     console.log(state);
     if (state == 3) {
-      console.log('buffering')
       window.buffering = true;
     } else if (state == 1) {
       if (window.buffering == true) {
-        console.log('video playing!')
         window.buffering = false;
         window.player.pauseVideo();
-        window.pausedBYJS = true;
         window.socket.emit('video_ready', {
           session_id: window.session_id,
           phone_id: window.phone_id,
         });
       }
-    } else if (state == 2 && window.isFirstPause && !window.pausedBYJS) {
-      console.log('video paused');
-      window.isFirstPause = false;
-      window.socket.emit('video_pause', {
-        session_id: window.session_id,
-        phone_id: window.phone_id,
-      });
     }
     // if (event.data == YT.PlayerState.PLAYING && !done) {
     //   setTimeout(stopVideo, 6000);
