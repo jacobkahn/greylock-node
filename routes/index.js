@@ -53,4 +53,10 @@ router.get('/youtube/:session_id/:phone_id', function(req, res, next) {
   });
 });
 
+router.get('/bird', function (req, res, next) {
+  res.render('bird', {
+
+  });
+});
+
 module.exports = router;
