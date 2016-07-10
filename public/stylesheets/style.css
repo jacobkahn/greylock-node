@@ -33,6 +33,11 @@ a {
     border-radius: 50%;
 }
 
+img {
+    height: auto;
+    max-width: 100%;
+}
+
 .info {
     color: #fff;
     text-align: center;
