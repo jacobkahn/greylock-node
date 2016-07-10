@@ -70,4 +70,8 @@ io.on('connection', function(socket) {
   socket.on('video_safe', function (data) {
     io.sockets.emit('play_video', {});
   });
+
+  socket.on('bird_flap', function (data) {
+    socket.broadcast.emit('bird_flap', {});
+  });
 });
