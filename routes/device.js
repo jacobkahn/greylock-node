@@ -31,7 +31,6 @@ router.post('/create_session', function (req, res, next) {
     };
     client.set('session-' + sessionID, JSON.stringify(session), function (err, result) {
       client.set('session_counter', sessionID, function (err, result) {
-      	console.log(session);
         res.send({
           session_id: sessionID,
           status: 'success',
@@ -53,7 +52,6 @@ router.post('/register_session', function (req, res, next) {
       neighbors: {},
     };
     client.set('session-' + sessionID, JSON.stringify(session), function (err, result) {
-      console.log(session);
       res.send({
         count: session.count,
         status: 'success',
@@ -102,6 +100,8 @@ router.post('/calibrate', function (req, res, next) {
 
   client.get('session-' + sessionID, function (err, result) {
     var session = JSON.parse(result);
+    console.log(session);
+    console.log('device id is ', deviceID);
     session['devices'][deviceID]['calibrationTimestamp'] = calibrationTimestamp;
 
     var numberCalibrated = getNumberCalibrated(session);
@@ -109,7 +109,6 @@ router.post('/calibrate', function (req, res, next) {
       session = generatePhonePointers(session);
     }
     client.set('session-' + sessionID, JSON.stringify(session), function (err, result) {
-      console.log(session);
       res.send({
         count: session.count,
         status: 'success',
