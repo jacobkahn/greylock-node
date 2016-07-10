@@ -35,7 +35,7 @@ $(document).ready(function() {
     window.player.playVideo();
   });
 
-  window.socket.on('wait_pause', function(data) {
+  window.socket.on('video_pause', function(data) {
     window.player.pauseVideo();
   });
 
