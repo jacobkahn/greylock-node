@@ -28,6 +28,10 @@ $(document).ready(function() {
   // add focus to the item
   $('.info').text('Locally anchored at 0, 0').focus();
 
+  if (window.isFirst = 'false') {
+    $('#item').hide();
+  }
+
   // ----------------------------- SOCKET ----------------------------------
   window.socket = io();
   // -----------------------------------------------------------------------
@@ -37,6 +41,7 @@ $(document).ready(function() {
     // TODO: change this to filter only information relevant to this client
     var anchor = data[window.phone_id].anchor;
     $('#item').css({
+      display: 'block',
       top: anchor.x,
       left: anchor.y
     });
