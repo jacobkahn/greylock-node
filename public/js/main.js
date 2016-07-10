@@ -6,42 +6,17 @@ $(document).ready(function() {
   $('#diagnostics').html(diagnostics);
 
   // lock in screen size to device display size
-  if (window.orientation != 'null') {
-    if (window.orientation == 'portrait') {
-      $('body').css({
-        height: screen.height,
-        width: screen.width,
-        overlow: 'hidden',
-      });
-      $('#container').css({
-        height: screen.height,
-        width: screen.width,
-        overlow: 'hidden',
-      });
-    } else {
-      $('body').css({
-        height: screen.width,
-        width: screen.height,
-        overlow: 'hidden',
-      });
-      $('#container').css({
-        height: screen.width,
-        width: screen.height,
-        overlow: 'hidden',
-      });
-    }
-  } else {
-    $('body').css({
-      height: screen.height,
-      width: screen.width,
-      overlow: 'hidden',
-    });
-    $('#container').css({
-      height: screen.height,
-      width: screen.width,
-      overlow: 'hidden',
-    });
-  }
+
+  $('body').css({
+    height: screen.height,
+    width: screen.width,
+    overlow: 'hidden',
+  });
+  $('#container').css({
+    height: screen.height,
+    width: screen.width,
+    overlow: 'hidden',
+  });
 
   $('body').on({
     'mousewheel': function(e) {
@@ -95,7 +70,7 @@ $(document).ready(function() {
     // $('.info').text('Locally anchored at ' + anchor.x + ', ' + anchor.y);
   });
 
-  window.socket.on('reload', function () {
+  window.socket.on('reload', function() {
     window.location.reload();
   });
 
