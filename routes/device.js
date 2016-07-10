@@ -53,7 +53,7 @@ router.post('/register_session', function (req, res, next) {
     };
     client.set('session-' + sessionID, JSON.stringify(session), function (err, result) {
       res.send({
-        count: sessionID,
+        session_id: sessionID,
         status: 'success',
       });
     });
@@ -99,10 +99,15 @@ router.post('/calibrate', function (req, res, next) {
   var sessionID = req.body.session_id;
   var deviceID = req.body.phone_id;
   var calibrationTimestamp = req.body.timestamp;
+  var screenHeight = req.body.screen_height;
+  var screenWidth = req.body.screen_width;
 
   client.get('session-' + sessionID, function (err, result) {
     var session = JSON.parse(result);
     session['devices'][deviceID]['calibrationTimestamp'] = calibrationTimestamp;
+    session['devices'][deviceID]['screenHeight'] = screenHeight;
+    session['devices'][deviceID]['screenWidth'] = screenWidth;
+
 
     var numberCalibrated = getNumberCalibrated(session);
     if (numberCalibrated === Number(session['count'])) {
