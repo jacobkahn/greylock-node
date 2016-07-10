@@ -14,8 +14,6 @@ io.on('connection', function(socket) {
 
   socket.on('item_move', function(data) {
     // item has moved on the page 
-    console.log(data);
-    console.log(data.anchor);
     // calculate new_data
     var sessionID = data.session_id;
     client.get('session-' + sessionID, function (err, result) {
