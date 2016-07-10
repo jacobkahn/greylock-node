@@ -88,7 +88,7 @@ $(document).ready(function() {
   //    the player should play for six seconds and then stop.
   // var done = false;
   function onPlayerStateChange(event) {
-    var state = event.state;
+    var state = event.data;
     console.log(state);
     if (state == 3) {
       window.buffering = true;
