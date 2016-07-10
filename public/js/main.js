@@ -91,7 +91,7 @@ $(document).ready(function() {
         scale = scale * (1 + event.ds);
 
         scaleElement.style.webkitTransform = scaleElement.style.transform = 'scale(' + scale + ')';
-        gestureArea.style.webkitTransform = gestureArea.style.transform = 'scale(' + scale + ')';
+        // gestureArea.style.webkitTransform = gestureArea.style.transform = 'scale(' + scale + ')';
         dragMoveListener(event);
       },
     });
