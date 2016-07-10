@@ -83,6 +83,7 @@ $(document).ready(function() {
       console.log('I am ready to play');
       window.player.playVideo();
       window.READY = true;
+      window.isFirstPause = true;
     }
   }
 
@@ -104,8 +105,12 @@ $(document).ready(function() {
           phone_id: window.phone_id,
         });
       }
-    } else if (state == 2) {
-      window.socket.emit('video_pause', {});
+    } else if (state == 2 && window.isFirstPause) {
+      window.isFirstPause = false;
+      window.socket.emit('video_pause', {
+        session_id: window.session_id,
+        phone_id: window.phone_id,
+      });
     }
     // if (event.data == YT.PlayerState.PLAYING && !done) {
     //   setTimeout(stopVideo, 6000);
