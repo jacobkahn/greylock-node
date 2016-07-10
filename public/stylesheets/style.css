@@ -31,11 +31,14 @@ a {
     max-height: 250px;
     background: rgba(0, 0, 0, 0.7);
     border-radius: 50%;
+    overflow: hidden;
 }
 
 img {
     height: auto;
-    max-width: 100%;
+    max-width: 230px;
+    max-height: 230px;
+    border-radius: 50%;
 }
 
 .info {
