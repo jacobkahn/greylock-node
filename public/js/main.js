@@ -90,8 +90,13 @@ $(document).ready(function() {
       onmove: function(event) {
         scale = scale * (1 + event.ds);
 
-        scaleElement.style.webkitTransform = scaleElement.style.transform = 'scale(' + scale + ')';
-        // gestureArea.style.webkitTransform = gestureArea.style.transform = 'scale(' + scale + ')';
+        scaleElement.style.webkitTransform =
+          scaleElement.style.transform =
+          'scale(' + scale + ')';
+
+        gestureArea.style.webkitTransform =
+          gestureArea.style.transform = 
+          'scale(' + scale + ')';
         dragMoveListener(event);
       },
     });
