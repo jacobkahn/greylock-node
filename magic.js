@@ -57,21 +57,10 @@ io.on('connection', function(socket) {
   });
 
   socket.on('video_pause', function (data) {
-    console.log('video_pause event');
-    var deviceID = data.phone_id;
-    var sessionID = data.session_id;
-    client.get('session-' + sessionID, function (err, result) {
-      var session = JSON.parse(result);
-      socket.broadcast.emit('video_pause', {});
-      Object.keys(session['devices']).forEach(function (device) {
-        session['devices'][device]['youtubeClientLoaded'] = 'false';
-      });
-      client.set('session-' + sessionID, JSON.stringify(session), function (err, newResult) {});
-    });
+    socket.broadcast.emit('video_pause', {});
   });
 
   socket.on('video_play', function (data) {
-    console.log('video_play event');
     socket.broadcast.emit('video_play', {});
   });
 
