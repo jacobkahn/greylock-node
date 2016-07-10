@@ -65,7 +65,7 @@ var generateSortedDeviceIDs = function (session) {
   deviceIDs.sort(function (a, b) {
     aDate = moment(session['devices'][a]['calibrationTimestamp'], 'x');
     bDate = moment(session['devices'][b]['calibrationTimestamp'], 'x');
-    return aDate.isAfter(bDate) ? -1 : 1;
+    return aDate.isAfter(bDate) ? 1 : -1;
   });
   return deviceIDs;
 };
@@ -141,10 +141,6 @@ router.post('/calibrate', function (req, res, next) {
   
   client.get('session-' + sessionID, function (err, result) {
     var session = JSON.parse(result);
-    if (Number(session['count']) === 4) {
-	  screenHeight = req.body.screen_width;
-	  screenWidth = req.body.screen_height;
-	}
 
     session['devices'][deviceID]['calibrationTimestamp'] = calibrationTimestamp;
     session['devices'][deviceID]['screenHeight'] = screenHeight;
@@ -158,7 +154,7 @@ router.post('/calibrate', function (req, res, next) {
       session = calculateGlobalOffsets(session);
     }
     client.set('session-' + sessionID, JSON.stringify(session), function (err, result) {
-      console.log('creating session with data', session);
+      console.log('creating session with data', JSON.stringify(session));
       res.send({
         count: session.count,
         status: 'success',
