@@ -47,3 +47,8 @@ img {
     text-align: center;
     padding: 25px;
 }
+
+#player {
+  position: absolute;
+  overflow: hidden;
+}
