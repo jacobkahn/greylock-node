@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var client = require('../db/db');
+var utils = require('../utils');
 
 /* GET home page. */
 router.get('/page/:session_id/:phone_id', function(req, res, next) {
@@ -11,11 +12,20 @@ router.get('/page/:session_id/:phone_id', function(req, res, next) {
     console.log('first_phone_id', session['sortedDeviceIDs'][0]);
     console.log('phoneID', phoneID);
     console.log(String(session['sortedDeviceIDs'][0] == phoneID));
+
+    var positioning = utils.calculateGlobalOffsetFromInitialAnchor(0, 0, session, phoneID);
+    var globalHorizontalOffset = positioning['globalHorizontalOffset'] * -1;
+    var globalVerticalOffset = positioning['globalVerticalOffset'] * -1;
+    console.log('rendering a new page with offsets', globalHorizontalOffset, globalVerticalOffset);
+
     res.render('index', {
       title: 'Express',
       phone_id: phoneID,
       session_id: sessionID,
-      isFirst: (session['sortedDeviceIDs'][0] == phoneID) ? Number(1) : Number(0),
+      anchor: {
+        x: globalHorizontalOffset,
+        y: globalVerticalOffset,
+      },
 	});
   });
 });
