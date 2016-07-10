@@ -9,14 +9,10 @@ router.get('/page/:session_id/:phone_id', function(req, res, next) {
   var phoneID = req.params.phone_id;
   client.get('session-' + sessionID, function (err, result) {
     var session = JSON.parse(result);
-    console.log('first_phone_id', session['sortedDeviceIDs'][0]);
-    console.log('phoneID', phoneID);
-    console.log(String(session['sortedDeviceIDs'][0] == phoneID));
 
     var positioning = utils.calculateGlobalOffsetFromInitialAnchor(0, 0, session, phoneID);
     var globalHorizontalOffset = positioning['globalHorizontalOffset'] * -1;
     var globalVerticalOffset = positioning['globalVerticalOffset'] * -1;
-    console.log('rendering a new page with offsets', globalHorizontalOffset, globalVerticalOffset);
 
     res.render('index', {
       title: 'Express',
