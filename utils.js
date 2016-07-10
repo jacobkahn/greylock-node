@@ -74,8 +74,8 @@ function translateGlobal(translationx, translationy, phonelst) {
 	Translates the global frame itself (equivalent to scrolling). Note: anchor point also needs to be translated separately.
 	*/
 	var newlst = [];
-	for (var j = 0; j < lst.length; j++){
-  		curphone = lst[j];
+	for (var j = 0; j < phonelst.length; j++){
+  		phone = phonelst[j];
   		newpt = [phone["corner"]["x"], phone["corner"]["y"]];
   		newpt[0] += translationx;
   		newpt[1] += translationy;
@@ -100,7 +100,7 @@ function scale(factor, centerx, centery, pointx, pointy) {
 
 function rotate(theta, centerx, centery, pointx, pointy) {
 	/**
-	Rotates a vector from center to point around center counterclockwise by theta (in degrees).
+	Rotates a vector from center to point around center clockwise by theta (in degrees).
 	*/
 	dx = pointx - centerx
 	dy = pointy - centery
