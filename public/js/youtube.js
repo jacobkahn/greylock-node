@@ -80,6 +80,7 @@ $(document).ready(function() {
     // event.target.playVideo();
     window.player = event.target;
     console.log('I am ready to play');
+    window.player.playVideo();
 
   }
 
