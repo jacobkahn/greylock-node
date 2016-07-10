@@ -104,7 +104,7 @@ $(document).ready(function() {
       target.style.width = event.rect.width + 'px';
       target.style.height = event.rect.height + 'px';
 
-      var item = $('#item');
+      var item = $('#picture');
       item.css({
         width: event.rect.width - 20+ 'px',
         height: event.rect.height - 20+ 'px'
