@@ -40,6 +40,7 @@ $(document).ready(function() {
   });
 
   function onYouTubeIframeAPIReady() {
+    console.log('triggered');
     player = new YT.Player('player', {
       height: String(window.global_height),
       width: String(window.global_width),
