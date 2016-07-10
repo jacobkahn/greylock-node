@@ -90,8 +90,8 @@ $(document).ready(function() {
     target.setAttribute('data-x', x);
     target.setAttribute('data-y', y);
 
-    $('#item').data('x', anchor.x);
-    $('#item').data('y', anchor.y);
+    $('#item').data('x', x);
+    $('#item').data('y', y);
 
     // ------------------ render diagnostic information ------------------
 
