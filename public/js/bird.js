@@ -41,6 +41,8 @@ var pipes = new Array();
 
 var replayclickable = false;
 
+var pipeSeed = [0.4, 0.1, 0.9, 0.8, 0.7, 0.4, 0.3, 0.2, 0.5, 0.5];
+var pipeIndex = 0;
 
 //loops
 var loopGameloop;
@@ -453,7 +455,8 @@ function updatePipes()
    //add a new pipe (top height + bottom height  + pipeheight == flyArea) and put it in our tracker
    var padding = 80;
    var constraint = flyArea - pipeheight - (padding * 2); //double padding (for top and bottom)
-   var topheight = Math.floor((Math.random()*constraint) + padding); //add lower padding
+   var topheight = Math.floor((pipes[pipeIndex % 10]*constraint) + padding); //add lower padding
+   pipeIndex += 1;
    var bottomheight = (flyArea - pipeheight) - topheight;
    var newpipe = $('<div class="pipe animated"><div class="pipe_upper" style="height: ' + topheight + 'px;"></div><div class="pipe_lower" style="height: ' + bottomheight + 'px;"></div></div>');
    $("#flyarea").append(newpipe);
