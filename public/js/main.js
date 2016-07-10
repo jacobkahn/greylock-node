@@ -90,6 +90,9 @@ $(document).ready(function() {
     target.setAttribute('data-x', x);
     target.setAttribute('data-y', y);
 
+    $('#item').data('x', anchor.x);
+    $('#item').data('y', anchor.y);
+
     // ------------------ render diagnostic information ------------------
 
     var textEl = event.target.querySelector('p');
