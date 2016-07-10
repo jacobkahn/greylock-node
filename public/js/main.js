@@ -56,8 +56,8 @@ $(document).ready(function() {
     });
     $('#item').data('x', anchor.x);
     $('#item').data('y', anchor.y);
-    document.getElementById('item').setAttribute('data-x', x);
-    document.getElementById('item').setAttribute('data-y', y);
+    document.getElementById('item').setAttribute('data-x', anchor.x);
+    document.getElementById('item').setAttribute('data-y', anchor.y);
     $('.info').text('Locally anchored at ' + anchor.x + ', ' + anchor.y);
   });
 
