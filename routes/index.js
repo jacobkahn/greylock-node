@@ -14,8 +14,8 @@ router.get('/page/:session_id/:phone_id', function(req, res, next) {
     console.log(String(session['sortedDeviceIDs'][0] == phoneID));
 
     var positioning = utils.calculateGlobalOffsetFromInitialAnchor(0, 0, session, phoneID);
-    var globalHorizontalOffset = positioning['globalHorizontalOffset'];
-    var globalVerticalOffset = positioning['globalVerticalOffset'];
+    var globalHorizontalOffset = positioning['globalHorizontalOffset'] * -1;
+    var globalVerticalOffset = positioning['globalVerticalOffset'] * -1;
     console.log('rendering a new page with offsets', globalHorizontalOffset, globalVerticalOffset);
 
     res.render('index', {
