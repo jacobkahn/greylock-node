@@ -293,7 +293,7 @@ window.socket = io();
 window.socket.on('bird_click', function (data) {
    console.log('fail');
    console.log(data.is_replay);
-   window.isClickedByJS = false;
+   window.isClickedByJS = data.is_replay;
    data.is_replay ? replayer() : screenClick();
 });
 
