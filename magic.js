@@ -81,7 +81,7 @@ io.on('connection', function(socket) {
 
   socket.on('flip', function (data) {
     var sessionID = data.session_id;
-    var deviceID = data.phone_did;
+    var deviceID = data.phone_id;
     var orientation = data.orientation;
     // if (orientation === 'landscape') {
 
