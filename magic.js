@@ -19,8 +19,9 @@ io.on('connection', function(socket) {
     client.get('session-' + sessionID, function (err, result) {
       var session = JSON.parse(result);
 
-      var globalVerticalOffset = data.anchor.y;
-      var globalHorizontalOffset = data.anchor.x;
+      var globalVerticalOffset = Number(data.anchor.y);
+      var globalHorizontalOffset = Number(data.anchor.x);
+      console.log('Moving from, before calcs ', globalHorizontalOffset, globalVerticalOffset);
       var phoneAbove = session['devices'][data.phone_id]['neighbors']['up'];
       while (phoneAbove) {
         globalVerticalOffset += Number(session['devices'][phoneAbove]['screenHeight']);
@@ -31,6 +32,7 @@ io.on('connection', function(socket) {
         globalHorizontalOffset += Number(session['devices'][phoneLeft]['screenWidth']);
         phoneLeft = session['devices'][phoneLeft]['neighbors']['left'];
       }
+      console.log('Moving from ', globalHorizontalOffset, globalVerticalOffset);
       var responseObj = {};
       Object.keys(session['devices']).forEach(function (deviceID) {
         responseObj[deviceID] = {
@@ -40,6 +42,7 @@ io.on('connection', function(socket) {
           }
         };
       });
+      console.log(JSON.stringify(responseObj));
       socket.broadcast.emit('item_draw', responseObj);
     });
   });
