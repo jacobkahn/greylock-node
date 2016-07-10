@@ -22,12 +22,12 @@ io.on('connection', function(socket) {
       var globalVerticalOffset = data.anchor.y;
       var globalHorizontalOffset = data.anchor.x;
       var phoneAbove = session['devices'][data.phone_id]['neighbors']['up'];
-      while (phoneAbove !== null) {
+      while (phoneAbove) {
         verticalOffset += session['devices'][phoneAbove]['screenHeight'];
         phoneAbove = session['devices'][phoneAbove]['neighbors']['up'];
       }
       var phoneLeft = session['devices'][data.phone_id]['neighbors']['left'];
-      while (phoneLeft !== null) {
+      while (phoneLeft) {
         horizontalOffset += session['devices'][phoneLeft]['screenHeight'];
         phoneLeft = session['devices'][phoneLeft]['neighbors']['left'];
       }

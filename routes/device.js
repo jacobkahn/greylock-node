@@ -103,12 +103,12 @@ var calculateGlobalOffsets = function (session) {
 	    var virtualVerticalOffset = 0;
 	    var virtualHorizontalOffset = 0;
 	    var phoneAbove = session['devices'][deviceID]['neighbors']['up'];
-	    while (phoneAbove !== null) {
+	    while (phoneAbove) {
 	      virtualVerticalOffset += session['devices'][phoneAbove]['screenHeight'];
 	      phoneAbove = session['devices'][phoneAbove]['neighbors']['up'];
 	    }
 	    var phoneLeft = session['devices'][deviceID]['neighbors']['left'];
-	    while (phoneLeft !== null) {
+	    while (phoneLeft) {
 	      virtualHorizontalOffset += session['devices'][phoneLeft]['screenHeight'];
 	      phoneLeft = session['devices'][phoneLeft]['neighbors']['left'];
 	    }
