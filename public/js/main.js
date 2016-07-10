@@ -40,7 +40,6 @@ $(document).ready(function() {
   window.socket.on('item_draw', function(data) {
     // TODO: change this to filter only information relevant to this client
     var anchor = data[window.phone_id].anchor;
-    console.log(anchor);
     $('#item').css({
       display: 'block',
       transform: `translate(${anchor.x}px, ${anchor.y}px)`,
@@ -49,6 +48,7 @@ $(document).ready(function() {
     });
     $('#item').data('x', anchor.x);
     $('#item').data('y', anchor.y);
+    console.log($('#item').data())
     $('.info').text('Locally anchored at ' + anchor.x + ', ' + anchor.y);
   });
 
@@ -104,8 +104,6 @@ $(document).ready(function() {
     var item = interact.getElementRect(event.target);
 
     textEl && (textEl.textContent = 'Locally anchored at ' + item.left + ', ' + item.top)
-
-    console.log($('#item').data('x'), $('#item').data('y'));
 
     window.socket.emit('item_move', {
       anchor: {
