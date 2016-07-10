@@ -34,7 +34,7 @@ $(document).ready(function() {
     window.player.playVideo();
   });
 
-  window.socket.on('wait_on_vidoe', function(data) {
+  window.socket.on('wait_pause', function(data) {
     window.player.pauseVideo();
   });
 
@@ -104,6 +104,8 @@ $(document).ready(function() {
           phone_id: window.phone_id,
         });
       }
+    } else if (state == 2) {
+      window.socket.emit('video_pause', {});
     }
     // if (event.data == YT.PlayerState.PLAYING && !done) {
     //   setTimeout(stopVideo, 6000);
