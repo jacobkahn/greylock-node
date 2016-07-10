@@ -36,14 +36,8 @@ a {
 img {
     padding: 10px;
     height: auto;
-    width: 230px;
-    height: 230px;
     border-radius: 50%;
     opacity: 0.9;
-}
-
-#magic {
-  opacity: 0.9;
 }
 
 .info {
