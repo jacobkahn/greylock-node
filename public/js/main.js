@@ -33,10 +33,10 @@ $(document).ready(function() {
 
   // add focus to the item
   var item = $('#item');
-  $(item).data('x', window.anchor.x);
-  $(item).data('y', window.anchor.y);
-  var x = $(item).data('x');
-  var y = $(item).data('y');
+  item.data('x', window.anchor.x);
+  item.data('y', window.anchor.y);
+  var x = item.data('x');
+  var y = item.data('y');
   $('.info').text(`Locally anchored at ${x}, ${y}`).focus();
 
   // ----------------------------- SOCKET ----------------------------------
