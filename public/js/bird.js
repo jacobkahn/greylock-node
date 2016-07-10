@@ -15,7 +15,6 @@
    limitations under the License.
 */
 $(document).ready(function () {
-   console.log(window.anchor);
    $('#gamecontainer').css({
       left: window.anchor.x,
       top: window.anchor.y,
@@ -96,7 +95,6 @@ function setCookie(cname,cvalue,exdays)
 
 function showSplash()
 {
-   console.log('showsplash');
    currentstate = states.SplashScreen;
    
    //set the defaults (again)
@@ -265,7 +263,6 @@ $(document).keydown(function(e){
    {
       //in ScoreScreen, hitting space should click the "replay" button. else it's just a regular spacebar hit
       if(currentstate == states.ScoreScreen) {
-         console.log('hello there i am clicking the thing');
          window.socket.emit('bird_click', {is_replay: true});
          $("#replay").click();
       } else {
@@ -291,9 +288,7 @@ window.socket = io();
 // -----------------------------------------------------------------------
 
 window.socket.on('bird_click', function (data) {
-   console.log('fail');
-   console.log(data.is_replay);
-   window.isClickedByJS = data.is_replay;
+   window.isClickedByJS = !data.is_replay;
    data.is_replay ? replayer() : screenClick();
 });
 
@@ -304,7 +299,6 @@ window.socket.on('death', function () {
 
 function screenClick()
 {  
-   console.log('received a click', currentstate);
 
    if(currentstate == states.GameScreen)
    {
@@ -386,7 +380,6 @@ function playerDead()
       window.socket.emit('death', {});
       window.deathByJS = false;
    }
-   console.log('playerdead');
    //stop animating everything!
    $(".animated").css('animation-play-state', 'paused');
    $(".animated").css('-webkit-animation-play-state', 'paused');
@@ -412,7 +405,6 @@ function playerDead()
 
 function showScore()
 {
-   console.log('showscore');
    //unhide us
    $("#scoreboard").css("display", "block");
    
@@ -455,12 +447,10 @@ function showScore()
 
 
 function replayer() {
-   console.log(window.isClickedByJS);
    if (window.isClickedByJS) {
       window.socket.emit('bird_click', {is_replay: true});
       window.isClickedByJS = false;
    }
-   console.log('it is failing');
    //make sure we can only click once
    if(!replayclickable)
       return;
