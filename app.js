@@ -58,6 +58,6 @@ app.use(function(err, req, res, next) {
   });
 });
 
-db.set('session_counter', 1, function () {});
+db.set('session_counter', 0, function () {});
 
 module.exports = app;
