@@ -71,11 +71,14 @@ io.on('connection', function(socket) {
     io.sockets.emit('play_video', {});
   });
 
-  socket.on('bird_flap', function (data) {
-    socket.broadcast.emit('bird_flap', {});
+  socket.on('bird_click', function (data) {
+    console.log('bird_click', data.is_replay);
+    socket.broadcast.emit('bird_click', {is_replay: data.is_replay});
   });
 
-  socket.on('resize', function(data) {
-    socket.broadcast.emit('resize_image', data);
-  });
+  socket.on('death', function () {
+    console.log('death');
+    socket.broadcast.emit('death', {});
+  })
+
 });
