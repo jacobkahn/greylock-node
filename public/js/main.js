@@ -46,7 +46,7 @@ $(document).ready(function() {
       top: anchor.y,
       left: anchor.x
     });
-    $('.info').text('Locally anchored at ' + anchor.left + ', ' + anchor.top);
+    $('.info').text('Locally anchored at ' + anchor.x + ', ' + anchor.y);
   });
 
   var ITEM_WIDTH = $('.item').css('width');
