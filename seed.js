@@ -34,7 +34,7 @@ var seedData = {
           virtualHorizontalOffset: 667,
     },
     [bottomLeft]: {
-      deviceID: topLeft,
+      deviceID: bottomLeft,
       neighbors: {
         up: topLeft,
         right: bottomRight,
@@ -46,7 +46,7 @@ var seedData = {
           virtualHorizontalOffset: 0,
     },
     [bottomRight]: {
-      deviceID: topLeft,
+      deviceID: bottomRight,
       neighbors: {
         left: bottomLeft,
         up: topRight,
