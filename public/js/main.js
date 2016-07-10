@@ -26,8 +26,9 @@ $(document).ready(function() {
   });
 
   $('#item').css({
-    left: window.anchor.x,
-    top: window.anchor.y,
+    transform: `translate(${window.anchor.x}px, ${window.anchor.y}px)`,
+    '-webkit-transform': `translate(${window.anchor.x}px, ${window.anchor.y}px)`,
+    '-ms-transform': `translate(${window.anchor.x}px, ${window.anchor.y}px)`
   });
 
   // add focus to the item
