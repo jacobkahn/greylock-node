@@ -35,6 +35,7 @@ io.on('connection', function(socket) {
   });
 
   socket.on('video_ready', function (data) {
+    console.log('video_ready event');
     var deviceID = data.phone_id;
     var sessionID = data.session_id;
     client.get('session-' + sessionID, function (err, result) {
@@ -44,7 +45,7 @@ io.on('connection', function(socket) {
         // Check to see if everyone else has completed
         var allClientsFinished = true;
         Object.keys(session['devices']).forEach(function (device) {
-          if (!session['devices'][device].hasOwnProperty('youtubeClientLoaded')) {
+          if (session['devices'][device]['youtubeClientLoaded'] != 'true') {
             allClientsFinished = false;
           }
         });
@@ -53,6 +54,25 @@ io.on('connection', function(socket) {
         }
       });
     });
+  });
+
+  socket.on('video_pause', function (data) {
+    console.log('video_pause event');
+    var deviceID = data.phone_id;
+    var sessionID = data.session_id;
+    client.get('session-' + sessionID, function (err, result) {
+      var session = JSON.parse(result);
+      socket.broadcast.emit('video_pause', {});
+      Object.keys(session['devices']).forEach(function (device) {
+        session['devices'][device]['youtubeClientLoaded'] = 'false';
+      });
+      client.set('session-' + sessionID, JSON.stringify(session), function (err, newResult) {});
+    });
+  });
+
+  socket.on('video_play', function (data) {
+    console.log('video_play event');
+    socket.broadcast.emit('video_play', {});
   });
 
   socket.on('video_buffering', function (data) {
