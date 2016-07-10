@@ -82,7 +82,22 @@ var generatePhonePointers = function (session) {
       left: sortedDeviceIDs[0],
     };
   } else if (Number(session['count']) === 4) {
-
+  	session['devices'][sortedDeviceIDs[0]]['neighbors'] = {
+      right: sortedDeviceIDs[1],
+      down: sortedDeviceIDs[2],
+    };
+    session['devices'][sortedDeviceIDs[1]]['neighbors'] = {
+      left: sortedDeviceIDs[0],
+      down: sortedDeviceIDs[3],
+    };
+    session['devices'][sortedDeviceIDs[2]]['neighbors'] = {
+      up: sortedDeviceIDs[0],
+      right: sortedDeviceIDs[3],
+    };
+    session['devices'][sortedDeviceIDs[3]]['neighbors'] = {
+      left: sortedDeviceIDs[2],
+      up: sortedDeviceIDs[1],
+    };
   }
   return session;
 };
@@ -123,6 +138,11 @@ router.post('/calibrate', function (req, res, next) {
   var calibrationTimestamp = req.body.timestamp;
   var screenHeight = req.body.screen_height;
   var screenWidth = req.body.screen_width;
+  
+  if (Number(session['count']) === 4) {
+    screenHeight = req.body.screen_width;
+    screenWidth = req.body.screen_height;
+  }
 
   client.get('session-' + sessionID, function (err, result) {
     var session = JSON.parse(result);
