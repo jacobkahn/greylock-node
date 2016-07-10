@@ -27,8 +27,8 @@ a {
 .item {
     padding: 10px;
     position: absolute;
-    max-width: 250px;
-    max-height: 250px;
+    width: 250px;
+    height: 250px;
     background: rgba(0, 0, 0, 0.7);
     border-radius: 50%;
     overflow: hidden;
@@ -39,6 +39,7 @@ img {
     max-width: 230px;
     max-height: 230px;
     border-radius: 50%;
+    opacity: 0.9;
 }
 
 .info {
