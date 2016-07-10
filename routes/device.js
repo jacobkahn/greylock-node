@@ -139,13 +139,13 @@ router.post('/calibrate', function (req, res, next) {
   var screenHeight = req.body.screen_height;
   var screenWidth = req.body.screen_width;
   
-  if (Number(session['count']) === 4) {
-    screenHeight = req.body.screen_width;
-    screenWidth = req.body.screen_height;
-  }
-
   client.get('session-' + sessionID, function (err, result) {
     var session = JSON.parse(result);
+    if (Number(session['count']) === 4) {
+	  screenHeight = req.body.screen_width;
+	  screenWidth = req.body.screen_height;
+	}
+
     session['devices'][deviceID]['calibrationTimestamp'] = calibrationTimestamp;
     session['devices'][deviceID]['screenHeight'] = screenHeight;
     session['devices'][deviceID]['screenWidth'] = screenWidth;
