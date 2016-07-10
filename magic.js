@@ -1,5 +1,5 @@
 var server = require('./bin/www');
-var client = require('../db/db');
+var client = require('./db/db');
 var utils = require('./utils');
 
 server.listen(3000);
