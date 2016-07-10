@@ -49,7 +49,7 @@ $(document).ready(function() {
   // $(document).append()
 
   var player;
-  function onYouTubeIframeAPIReady() {
+  window.onYouTubeIframeAPIReady = function() {
     console.log('triggered');
     player = new YT.Player('player', {
       height: String(window.global_height),

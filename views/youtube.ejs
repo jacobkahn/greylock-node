@@ -4,6 +4,29 @@
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <% include externalScripts %>
+    <script type="text/javascript">
+    window.onYouTubeIframeAPIReady = function() {
+      console.log('head trigger');
+      // player = new YT.Player('player', {
+      //   height: String(window.global_height),
+      //   width: String(window.global_width),
+      //   controls: 0,
+      //   playerVars: {
+      //     enablejsapi: 1,
+      //     fs: 0,
+      //     iv_load_policy: 3,
+      //     modestbranding: 1,
+      //     playsinline: 1,
+      //     rel: 0
+      //   },
+      //   videoId: 'bzD8H6o1awQ',
+      //   events: {
+      //     'onReady': onPlayerReady,
+      //     'onStateChange': onPlayerStateChange
+      //   }
+      // });
+    }
+    </script>
   </head>
   <body>
     <div id='container'>
