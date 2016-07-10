@@ -16,8 +16,6 @@ router.get('/initialize', function (req, res, next) {
 router.post('/create_session', function (req, res, next) {
   var deviceID = req.body.phone_id;
   var deviceCount = req.body.count;
-  console.log(deviceID);
-  console.log(deviceCount);
 
   client.get('session_counter', function (err, count) {
     var sessionID = Number(count) + 1;
@@ -33,7 +31,6 @@ router.post('/create_session', function (req, res, next) {
     };
     client.set('session-' + sessionID, JSON.stringify(session), function (err, result) {
       client.set('session_counter', sessionID, function (err, result) {
-      	console.log('create_session', session);
         res.send({
           session_id: sessionID,
           status: 'success',
@@ -114,8 +111,6 @@ var calculateGlobalOffsets = function (session) {
 	    }
 	    session['devices'][deviceID]['virtualVerticalOffset'] = virtualVerticalOffset;
 	    session['devices'][deviceID]['virtualHorizontalOffset'] = virtualHorizontalOffset;
-	    console.log(virtualHorizontalOffset);
-	    console.log(virtualVerticalOffset);
 	});
 	return session;
 }
@@ -138,10 +133,10 @@ router.post('/calibrate', function (req, res, next) {
     if (numberCalibrated === Number(session['count'])) {
       session = generatePhonePointers(session);
       session['sortedDeviceIDs'] = generateSortedDeviceIDs(session);
+      console.log(session['sortedDeviceIDs']);
       session = calculateGlobalOffsets(session);
     }
     client.set('session-' + sessionID, JSON.stringify(session), function (err, result) {
-      console.log('Session after calibration is now ', JSON.stringify(session));
       res.send({
         count: session.count,
         status: 'success',
