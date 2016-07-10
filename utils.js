@@ -63,8 +63,6 @@ function phoneToGlobal(pointx, pointy, phone) {
 }
 
 var calculateGlobalOffsetFromInitialAnchor = function (x, y, session, phoneID) {
-	console.log('phone id is', phoneID);
-	console.log(JSON.stringify(session));
 	var globalVerticalOffset = y;
 	var globalHorizontalOffset = x;
 	var phoneAbove = session['devices'][phoneID]['neighbors']['up'];
