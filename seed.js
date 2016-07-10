@@ -7,6 +7,7 @@ var bottomLeft = hat();
 var bottomRight = hat();
 
 var seedData = {
+	count: "4",
 	devices: {
 		[topLeft]: {
 			deviceID: topLeft,
