@@ -28,7 +28,7 @@ io.on('connection', function(socket) {
         phoneAbove = session['devices'][phoneAbove]['neighbors']['up'];
       }
       var phoneLeft = session['devices'][data.phone_id]['neighbors']['left'];
-      console.log(data.phone_id, '\n', JSON.stringify(session));
+      console.log(data.phone_id, '\n', JSON.stringify(session['devices'][data.phone_id]));
       console.log(phoneLeft);
       while (phoneLeft) {
         console.log('found a phone to the left with offset called ', phoneLeft, Number(session['devices'][phoneLeft]['screenWidth']));
